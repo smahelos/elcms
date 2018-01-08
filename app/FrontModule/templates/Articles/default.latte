@@ -1,0 +1,88 @@
+{block content}
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+	<!-- Content Header (Page header) -->
+	<section class="content-header">
+		<h1>
+            {_ ui.articles_list}
+		</h1>
+        {control breadcrumbsControl}
+		<div class="clear"></div>
+	</section>
+	<!-- Content Header Buttons (Page header) -->
+	<section class="content-header-buttons">
+		<div class="row">
+			<div class="col-xs-12 admin-buttons">
+				<div class="col-xs-12">
+					<div class="pull-right margin-bottom" role="group" aria-label="...">
+						<a class="btn btn-success" n:href="Articles:addArticle">Přidat článek</a>
+						<a
+							class="btn btn-danger"
+							data-confirm="modal"
+							data-confirm-title="{_ ui.confirmation}"
+							data-confirm-text="{_ ui.articles.article_permanent_delete_question}"
+							data-confirm-ok-class="btn-danger"
+							data-confirm-ok-text="{_ ui.delete}"
+							data-confirm-cancel-class="btn-success"
+							data-confirm-cancel-text="{_ ui.cancel}"
+							data-ajax="on"
+                            n:href="removeDeletedArticles!">{_ ui.articles.article_permanent_delete}</a>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="clear"></div>
+	</section>
+	<!-- Main content -->
+	<section class="content container-fluid">
+		<div id="articles">
+			{*{if count($articles)}*}
+				{*<table id="list" class="table table-striped table-striped table-bordered hover" width="100%" cellspacing="0">*}
+					{*<thead>*}
+						{*<tr>*}
+							{*<td>{_ ui.article_id}</td>*}
+							{*<td>{_ ui.article_title}</td>*}
+							{*<td>{_ ui.article_created_at}</td>*}
+							{*<td></td>*}
+							{*<td></td>*}
+							{*<td></td>*}
+						{*</tr>*}
+					{*</thead>*}
+					{*<tbody>*}
+						{*{foreach $articles as $article}*}
+							{*<tr n:class="$article->deleted ? deleted, $article->published ? success">*}
+								{*<td>*}
+									{*{$article->id}*}
+								{*</td>*}
+								{*<td>*}
+                                    {*{if $article->parent > 0}&nbsp;&nbsp;{/if}<a n:href="Articles:editArticle $article->id">{$article['title']}</a>*}
+								{*</td>*}
+								{*<td>*}
+									{*{$article['created_at']|date}*}
+								{*</td>*}
+								{*<td>*}
+									{*<a n:href="Articles:editArticle $article->id">Upravit</a>*}
+								{*</td>*}
+								{*<td n:class="$article->deleted ? deleted, $article->published ? success">*}
+									{*<a n:href="deleteArticle! $article->id">Smazat</a>*}
+								{*</td>*}
+								{*<td>*}
+									{*<a n:href=":Front:Articles:detail $article['id']" target="_blank">Zobrazit na webu</a>*}
+								{*</td>*}
+							{*</tr>*}
+						{*{/foreach}*}
+					{*</tbody>*}
+				{*</table>*}
+			{*{else}*}
+				{*Zatím nebyl napsán žádný článek.*}
+			{*{/if}*}
+
+            {snippet articleForm}
+                {control articleForm}
+            {/snippet}
+
+		</div>
+	</section>
+	<!-- /.content -->
+</div>
+<!-- /.content-wrapper -->

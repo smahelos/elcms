@@ -1,0 +1,30 @@
+ID: ID
+name: Jméno
+published: Zvežejněn
+created: Vytvořen
+no_item_found_reset: Žádné položky nenalezeny. Filtr můžete vynulovat.
+no_item_found: Žádné položky nenalezeny.
+here: zde
+items: Položky
+all: všechny
+from: z
+reset_filter: Resetovat filtr
+group_actions: Hromadné akce
+show: Zobrazit
+add: Přidat
+edit: Upravit
+show_all_columns: Zobrazit všechny sloupce
+show_default_columns: Zobrazit výchozí sloupce
+hide_column: Skrýt sloupec
+action: Akce
+previous: Předchozí
+next: Další
+choose: Vyberte
+choose_input_required: Group action text not allow empty value
+execute: Provést
+save: Uložit
+cancel: Zrušit
+multiselect_choose: Vyberte
+filter_submit_button: Filtrovta
+show_filter: Zobrazit filtr
+per_page_submit: Změnit
