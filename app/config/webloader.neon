@@ -1,0 +1,42 @@
+webloader:
+    css:
+        admin:
+            tempDir: '%wwwDir%/assets/admin/temp/'
+            tempPath: 'assets/admin/temp'
+            files:
+                - %wwwDir%/assets/admin/css/admin.min.css
+            filters:
+                #- @wlCssFilter
+                #- joseki\WebLoaderFilters\Filters::cssMin
+            fileFilters:
+                #- @lessFilter
+
+        front:
+            tempDir: '%wwwDir%/assets/front/temp/'
+            tempPath: 'assets/front/temp'
+            files:
+                - %wwwDir%/assets/admin/css/admin.min.css
+            filters:
+                #- joseki\WebLoaderFilters\Filters::cssMin
+            fileFilters:
+                #- @lessFilter
+    js:
+        admin:
+            tempDir: '%wwwDir%/assets/admin/temp/'
+            tempPath: 'assets/admin/temp'
+            files:
+                - %wwwDir%/Themes/admin/AdminLTE-2.4.2/dist/js/adminAll.js
+            filters:
+                #- ondrs\WebLoaderFilters\Filters::jsMin
+
+        front:
+            tempDir: '%wwwDir%/assets/front/temp/'
+            tempPath: 'assets/front/temp'
+            files:
+                - %wwwDir%/assets/admin/js/adminlte.min.js
+            filters:
+                #- joseki\WebLoaderFilters\Filters::jsMin
+
+services:
+    wlCssFilter: WebLoader\Filter\CssUrlsFilter(%wwwDir%)
+    lessFilter: WebLoader\Filter\LessFilter

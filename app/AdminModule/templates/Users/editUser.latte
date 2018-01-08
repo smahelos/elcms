@@ -1,0 +1,26 @@
+{block content}
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h1>{_ ui.users.user}</h1>
+
+        {snippet breadcrumbs}
+            {control breadcrumbs}
+        {/snippet}
+
+        <div class="clear"></div>
+    </section>
+    <!-- Content Header Buttons (Page header) -->
+    <!-- Main content -->
+    <section class="content container-fluid">
+        <div id="user">
+            {snippet userForm}
+                {control userForm}
+            {/snippet}
+        </div>
+    </section>
+    <!-- /.content -->
+
+</div>
+<!-- /.content-wrapper -->

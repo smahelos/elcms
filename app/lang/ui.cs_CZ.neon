@@ -1,0 +1,37 @@
+id: ID
+title: Vitejte
+logout: Odhlásit
+profile: Profil
+login_to_admin: Přihlášení do administrace
+error: Chyba
+articles:
+    articles: Články
+    breadcrumb:
+        text: články
+        title: články
+    article_add: Přidat článek
+    article_edit: Upravit článek
+    article_permanent_delete: Odstranit smazané
+    article_permanent_delete_question: Opravdu si přejete trvale odstranit všechny smazané položky?
+articles_list: Seznam článků
+add_article: Přidat článek
+article_id: ID
+article_title: Název článku
+article_created_at: Vytvořeno
+comments:
+    comments: Komentáře
+    comment_delete_question: Opravdu si přejete trvale odstranit komentář?
+homepage:
+    breadcrumb:
+        text: domů
+        title: domů
+confirmation: Potvrzení
+delete: Smazat
+cancel: Zrušit
+dashboard: Nástěnka
+users:
+    user: Uživatel
+    users: Uživatelé
+    breadcrumb:
+        text: Uživatelé
+    member_since: Členem od

@@ -1,0 +1,12 @@
+{block content}
+    <ol class="breadcrumb">
+        {foreach $links as $link}
+            <li>
+                {if isset($link['link']) && $link['link'] != ''}
+                    <a href="{$link['link']}"><i class="fa fa-dashboard"></i> {$link['title']}</a>
+                {else}
+                    {$link['title']}
+                {/if}
+            </li>
+        {/foreach}
+    </ol>

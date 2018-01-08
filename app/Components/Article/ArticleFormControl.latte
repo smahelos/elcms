@@ -1,0 +1,130 @@
+{block content}
+{form form}
+    <div class="errors" n:if="$form->hasErrors()">
+        <div n:foreach="$form->errors as $error" class="box box-solid box-danger">
+            <div class="box-header with-border">
+                <h3 class="box-title">{_ ui.error}</h3>
+                <div class="box-tools pull-right">
+                </div>
+                <!-- /.box-tools -->
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+                {$error}
+            </div>
+            <!-- /.box-body -->
+        </div>
+        <!-- /.box -->
+    </div>
+
+    <div class="row">
+        <div class="col-xs-8">
+            <div class="form-group has-feedback">
+                {label title}
+                {input title, class => 'form-control'}
+                <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+            </div>
+            <div class="form-group has-feedback">
+                {label perex}
+                {input perex, class => 'form-control'}
+                <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+            </div>
+            <div class="form-group has-feedback">
+                {label content}
+                {input content, class => 'form-control'}
+                <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+            </div>
+        </div>
+        <div class="col-xs-4">
+            <div class="form-group has-feedback">
+                <div class="row">
+                    <div class="col-xs-12">
+                        {label template}
+                    </div>
+                    <div class="col-xs-7">
+                        {input template, class => 'form-control template'}
+                    </div>
+                    <div class="col-xs-5">
+                        <a class="btn btn-default" href="#" onclick="startLatteTemplateEdit({$defaultTemplatesDir}, {$templateName});">Editovat šablonu</a>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group has-feedback">
+                {label parent}
+                {input parent, class => 'form-control'}
+            </div>
+            <div class="form-group has-feedback">
+                {label menuindex}
+                {input menuindex, class => 'form-control'}
+            </div>
+            <div class="checkboxes icheck">
+                {input published, class => 'icheckbox_flat-green'}
+            </div>
+            <div class="checkboxes icheck">
+                {input deleted, class => 'icheckbox_flat-green'}
+            </div>
+            <div class="form-group has-feedback">
+                {label menuindex}
+                {input menuindex, class => 'form-control'}
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="row">
+                <div class="col-xs-2">
+                    <br />
+                    {input articleId}
+                    {input submit, class => 'btn btn-success btn-block'}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="clear"></div>
+{/form}
+
+{if isset($comments) && count($comments)}
+    <div class="row heading">
+        <div class="col-xs-12">
+            <h2>{_ ui.comments.comments} {count($comments)}</h2>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="comments">
+            <div class="col-xs-12">
+                {foreach $comments as $comment}
+                    <div n:class="$iterator->odd ? row-odd : row-even, $iterator->last ? row-last, row">
+                        <div class="col-xs-8">
+                            <h4>{$comment->name}</h4>
+                            <p>autor: <b><a href="mailto:{$comment->email}" n:tag-if="$comment->email">{$comment->email}</a></b></p>
+                            <div>{$comment->content}</div>
+                        </div>
+                        <div class="col-xs-4">
+                            <div>
+                                <a
+                                    class="btn btn-danger"
+                                    data-confirm="modal"
+                                    data-confirm-title="{_ ui.confirmation}"
+                                    data-confirm-text="{_ ui.comments.comment_delete_question}"
+                                    data-confirm-ok-class="btn-danger"
+                                    data-confirm-ok-text="{_ ui.delete}"
+                                    data-confirm-cancel-class="btn-success"
+                                    data-confirm-cancel-text="{_ ui.cancel}"
+                                    data-ajax="on"
+                                    n:href="deleteComment! $comment->id, $comment->name, $this->getParameter('control')->getArticleId()">{_ ui.delete}</a>
+                            </div>
+                        </div>
+                    </div>
+                {/foreach}
+                <div class="clear"></div>
+            </div>
+            <div class="clear"></div>
+        </div>
+    </div>
+{/if}
+
+<div class="ace-dialog">
+    <div id="latteEditor" class="hide">
+    </div>
+</div>

@@ -1,0 +1,24 @@
+{block content}
+
+<p><a n:href="Homepage:default">← zpět na výpis příspěvků</a></p>
+
+<a n:href="edit $article->id" n:if="$user->loggedIn">Upravit článek</a>
+
+<div class="date">{$article->created_at|date:'F j, Y'}</div>
+
+<h1 n:block="title">{$article->title}</h1>
+
+<div class="article">{$article->content}</div>
+
+<h2>Komentáře</h2>
+
+<div class="comments">
+    {foreach $comments as $comment}
+        <p><b><a href="mailto:{$comment->email}" n:tag-if="$comment->email">{$comment->name}</a></b> napsal:</p>
+        <div>{$comment->content}</div>
+    {/foreach}
+</div>
+
+<h2>Vložte nový komentář</h2>
+
+{control commentForm}

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    {include 'htmlHead.latte'}
+</head>
+<body class="hold-transition skin-blue sidebar-mini">
+    <div class="wrapper">
+        {include 'header.latte'}
+        {include 'sideBar.latte'}
+
+        {snippet flashes}
+            <div class="flashes card slide">
+                <div class="container">
+                    <div n:foreach="$flashes as $flash" n:class="alert, flash, $flash->type">{$flash->message}</div>
+                </div>
+            </div>
+        {/snippet}
+
+        {snippet content}
+            {include content}
+        {/snippet}
+
+        {include 'footer.latte'}
+
+        {include 'controlSideBar.latte'}
+
+        {block scripts}
+
+            {control js}
+
+            <script type="text/javascript">
+                $(document).ready(function() {
+                    clickDatagridItemClass();
+
+                    //iCheck for checkbox and radio inputs
+                    //Flat red color scheme for iCheck
+                    $('.icheck input[type="checkbox"], .icheck input[type="radio"]').iCheck({
+                        checkboxClass: 'icheckbox_flat-blue',
+                        radioClass   : 'iradio_flat-green'
+                    });
+                } );
+                $(function () {
+                    $.nette.init();
+                });
+            </script>
+        {/block}
+    </div>
+</body>
+</html>

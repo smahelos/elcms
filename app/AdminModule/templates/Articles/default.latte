@@ -1,0 +1,64 @@
+{block content}
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+	<!-- Content Header (Page header) -->
+	<section class="content-header">
+		<h1>
+            {if $articleTitle !== null}
+                {$articleTitle}
+            {else}
+                {_ ui.articles_list}
+            {/if}
+		</h1>
+
+		{snippet breadcrumbs}
+            {control breadcrumbs}
+		{/snippet}
+
+		<div class="clear"></div>
+	</section>
+
+	<!-- Content Header Buttons (Page header) -->
+	<section class="content-header-buttons">
+		<div class="row">
+			<div class="col-xs-12 admin-buttons">
+				<div class="col-xs-12">
+					<div class="pull-right margin-bottom" role="group" aria-label="...">
+						<a class="btn btn-success" n:href="Articles:addArticle">Přidat článek</a>
+						<a
+							class="btn btn-danger"
+							data-confirm="modal"
+							data-confirm-title="{_ ui.confirmation}"
+							data-confirm-text="{_ ui.articles.article_permanent_delete_question}"
+							data-confirm-ok-class="btn-danger"
+							data-confirm-ok-text="{_ ui.delete}"
+							data-confirm-cancel-class="btn-success"
+							data-confirm-cancel-text="{_ ui.cancel}"
+							data-ajax="on"
+                            n:href="removeDeletedArticles!">{_ ui.articles.article_permanent_delete}</a>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="clear"></div>
+	</section>
+	<!-- Main content -->
+	<section class="content container-fluid">
+        {if $articleTitle === null}
+            <div id="articles">
+                {snippet articlesDatagrid}
+                    {control articlesDatagrid}
+                {/snippet}
+            </div>
+        {else}
+            <div id="article">
+                {snippet articleForm}
+                    {control articleForm}
+                {/snippet}
+            </div>
+        {/if}
+
+	</section>
+	<!-- /.content -->
+</div>
+<!-- /.content-wrapper -->

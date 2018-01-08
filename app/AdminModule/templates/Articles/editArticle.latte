@@ -1,0 +1,106 @@
+{block content}
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h1>{_ ui.articles.article_edit}</h1>
+
+        {snippet breadcrumbs}
+            {control breadcrumbs}
+        {/snippet}
+    </section>
+
+    <!-- Content Header Buttons (Page header) -->
+    <section class="content-header-buttons">
+        <div class="row">
+            <div class="col-xs-12 admin-buttons">
+                <div class="col-xs-12">
+                    <div class="pull-right margin-bottom" role="group">
+                        <a class="btn btn-default" n:href="Articles:default">← zpět na výpis článků</a>
+                        <a class="btn btn-default" href="#" onclick="startLatteTemplateEdit('http://localhost/nette-2-4-blog/app/AdminModule/templates/Admin/', 'default.latte');">Editace šablon</a>
+                    </div>
+                    <select name="template" id="template">
+                        <option value="testTemplate">contactForm</option>
+                        <option value="default" selected="selected">default</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main content -->
+    <section class="content container-fluid">
+        <div class="date">Datum vytvoření: {$article->created_at|customDate:'d.F Y H:i'}</div>
+        <br>
+
+        {snippet articleForm}
+            {control articleForm}
+        {/snippet}
+
+        <h2>Komentáře</h2>
+
+        <div class="comments">
+            {foreach $comments as $comment}
+                <p><b><a href="mailto:{$comment->email}" n:tag-if="$comment->email">{$comment->name}</a></b> napsal:</p>
+                <div>{$comment->content}</div>
+                <div><a n:href="deleteComment! $comment->id">Smazat</a></div>
+            {/foreach}
+        </div>
+    </section>
+    <!-- /.content -->
+</div>
+
+<style type="text/css" media="screen">
+    .ace-buttons {
+        height:49px;
+        position: absolute;
+        z-index:1050;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        background:#999;
+        padding:5px;
+    }
+    #latteEditorBar a {
+        margin-left:5px;
+    }
+    #latteEditor {
+        position: absolute;
+        z-index:1040;
+        top: 49px;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        min-height:100%;
+        padding-top:10px;
+    }
+    #latteEditorBar {
+        position: absolute;
+        z-index: 1050;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        height: 49px;
+        color: #fff;
+        padding:5px;
+        background:#999;
+        border-bottom:5px solid #272822;
+    }
+    #latteEditorBarTitle {
+        margin-left:5px;
+        line-height: 30px;
+        font-weight: bold;
+    }
+    .show {
+        display: block;
+    }
+    .hide {
+        display: none;
+    }
+</style>
+<div class="ace-dialog">
+    <div id="latteEditor" class="hide">
+    </div>
+</div>

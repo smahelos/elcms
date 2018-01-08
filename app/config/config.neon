@@ -1,0 +1,50 @@
+includes:
+    - webloader.neon
+
+parameters:
+    bowerDir: %wwwDir%/bower_components
+    globalConfig:
+        uploadsImagesDir: /uploads/images/
+
+
+application:
+	errorPresenter: Error
+
+
+session:
+	expiration: 14 days
+
+
+services:
+	BasePresenter:
+		class: AdminModule\BasePresenter
+		setup:
+			- baseParams(%globalConfig%)
+	router: App\RouterFactory::createRouter
+	authenticator: AuthenticatorModel
+	- App\Models\ImageStorageModel(%wwwDir%/uploads/images/)
+	latte.latteFactory:
+		setup:
+			- addFilter('customDate', 'App\Helpers\Filters::customDate')
+	- App\Helpers\Filters
+	- App\Models\ArticleManagerModel
+	- App\Models\CommentsManagerModel
+	- App\Models\UsersModel
+	- App\Models\TemplateEditorModel
+	- IUserFormControlFactory
+	- ILoginFormControlFactory
+	- IBreadcrumbsControlFactory
+	- IArticleFormControlFactory
+	- IArticlesDatagridControlFactory
+	- IUsersDatagridControlFactory
+	- App\Models\AuthorizatorFactory::create
+
+#security:
+#    users:
+#        admin: kokot  # user 'admin', password 'secret'
+
+
+extensions:
+    translation: Kdyby\Translation\DI\TranslationExtension
+    webloader: WebLoader\Nette\Extension
+    ajaxHistory: VojtechDobes\NetteAjax\HistoryExtension

@@ -1,0 +1,37 @@
+id: ID
+title: Hello
+logout: Logout
+profile: Profile
+login_to_admin: Log In to administration
+error: Error
+articles:
+    articles: Articles
+    breadcrumb:
+        text: articles
+        title: articles
+    article_add: Add article
+    article_edit: Edit article
+    article_permanent_delete: Remove deleted
+    article_permanent_delete_question: Do you realy want to completyly remove all deleted articles?
+articles_list: Articles list
+add_article: Add article
+article_id: ID
+article_title: Article title
+article_created_at: Created at
+comments:
+    comments: Comments
+    comment_delete_question: Do you realy want to completyly remove comment?
+homepage:
+    breadcrumb:
+        text: home
+        title: home
+confirmation: Confirmation
+delete: Delete
+cancel: Cancel
+dashboard: Dashboard
+users:
+    user: User
+    users: Users
+    breadcrumb:
+        text: Users
+    member_since: Member since

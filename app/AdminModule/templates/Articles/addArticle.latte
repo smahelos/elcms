@@ -1,0 +1,38 @@
+{block content}
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h1>{_ ui.articles.article_add}</h1>
+
+        {snippet breadcrumbs}
+            {control breadcrumbs}
+        {/snippet}
+
+    </section>
+
+    <!-- Content Header Buttons (Page header) -->
+    <section class="content-header-buttons">
+        <div class="row">
+            <div class="col-xs-12 admin-buttons">
+                <div class="col-xs-12">
+                    <div class="pull-right margin-bottom" role="group" aria-label="...">
+                        <a class="btn btn-default" n:href="Articles:default">← zpět na výpis článků</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main content -->
+    <section class="content container-fluid">
+        <div id="dashboard">
+        </div>
+        <div id="articles">
+            {snippet articleForm}
+                {control articleForm}
+            {/snippet}
+        </div>
+    </section>
+    <!-- /.content -->
+</div>

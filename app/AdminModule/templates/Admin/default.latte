@@ -1,0 +1,36 @@
+{block content}
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+	<!-- Content Header (Page header) -->
+	<section class="content-header">
+		<h1>{_ ui.dashboard}</h1>
+
+        {snippet breadcrumbs}
+            {control breadcrumbs}
+        {/snippet}
+
+		<div class="clear"></div>
+	</section>
+	<!-- Content Header Buttons (Page header) -->
+	<!-- Main content -->
+	<section class="content container-fluid">
+		<div id="dashboard">
+		</div>
+        {if $articleTitle === null}
+			<div id="articles">
+                {snippet articlesDatagrid}
+                    {control articlesDatagrid}
+                {/snippet}
+			</div>
+        {else}
+			<div id="article">
+                {snippet articleForm}
+                    {control articleForm}
+                {/snippet}
+			</div>
+        {/if}
+	</section>
+	<!-- /.content -->
+
+</div>
+<!-- /.content-wrapper -->
