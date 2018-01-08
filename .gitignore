@@ -8,7 +8,7 @@ temp/
 vendor/
 www/webtemp/
 www/checker/
-www/Themes/
 www/uploads/
 .idea/
 composer.lock
+/www/assets/admin/temp/*
