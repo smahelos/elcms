@@ -1,0 +1,15 @@
+parameters:
+
+
+database:
+	dsn: 'mysql:host=127.0.0.1;dbname=elcms'
+	user: root
+	password:
+
+	options:
+		PDO::MYSQL_ATTR_COMPRESS: true
+		lazy: true  # navázání připojení až když je poprvé potřeba
+
+		debugger: true        # zobrazí panel v Tracy baru
+		explain:  true        # explain dotazů v Tracy bar
+		autowired: true       # povoleno u prvního spojení
