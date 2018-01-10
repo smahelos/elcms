@@ -27,7 +27,8 @@
 		"ublaboo/datagrid-nette-database-data-source": "^1.0",
 		"dibi/dibi": "^3.1",
         "smahelos/ace-builds": "dev-master",
-		"vojtech-dobes/nette-ajax-history": "dev-master"
+		"vojtech-dobes/nette-ajax-history": "dev-master",
+		"almasaeed2010/adminlte": "^2.4"
 	},
 	"require-dev": {
 		"nette/tester": "^2.0"
