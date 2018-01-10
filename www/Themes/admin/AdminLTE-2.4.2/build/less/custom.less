@@ -1,5 +1,7 @@
 /* custom css for specific needs */
 
+@import "main.less";
+
 .clear {
     clear:both;
     height:0;
@@ -192,4 +194,36 @@
 }
 .row.row-last {
     border-bottom: 1px solid #999;
+}
+
+
+/* breadcrumbs */
+.breadcrumb {
+    margin-top: @line-height-computed;
+}
+
+/* layout */
+.skin-blue .content-header-buttons {
+  background: #bbb;
+  padding-top: 20px!important;
+}
+.content {
+  min-height: 250px;
+  padding: 15px;
+  background: #fbfcfd;
+  border-top: 1px solid #0b58a2;
+  border-bottom: 1px solid #0b58a2;
+}
+.main-sidebar {
+  width: 280px;
+  z-index: 810;
+}
+.main-header .logo {
+  width: 280px;
+}
+.main-header .navbar {
+  margin-left: 280px;
+}
+.content-wrapper, .main-footer {
+  margin-left: 280px;
 }
