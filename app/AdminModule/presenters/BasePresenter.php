@@ -69,22 +69,10 @@ class BasePresenter extends Presenter
         }
 
         $this->template->usersPhotoPath = $this->usersPhotoPath;
-        $this->template->user = $this->usersModel->getUserById($this->user->id);
+        $this->template->loggedInUser = $this->usersModel->getUserById($this->user->id);
         $this->uploadsImagesDir = $this->presenter->context->parameters['globalConfig']['uploadsImagesDir'];
         $this->template->uploadsImagesDir = $this->presenter->context->parameters['globalConfig']['uploadsImagesDir'];
     }
-
-
-//
-//    /**
-//     * BasePresenter constructor.
-//     *
-//     */
-//    public function __construct()
-//    {
-//        parent::__construct(); // pokud je konstruktor předka bez parametrů
-//        $this->uploadsImagesDir = '/uploads/images';
-//    }
 
     /**
      *

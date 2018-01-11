@@ -124,22 +124,22 @@
                         <!-- Menu Toggle Button -->
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                             <!-- The user image in the navbar-->
-                            <img src="{$user->photo ? $this->getParameter('baseUrl') . $uploadsImagesDir . 'users/thumbs/' . $user->photo : $adminAssetsPath . '/img/user2-160x160.jpg'}" class="user-image" alt="User Image">
+                            <img src="{$loggedInUser->photo ? $this->getParameter('baseUrl') . $uploadsImagesDir . 'users/thumbs/' . $loggedInUser->photo : $adminAssetsPath . '/img/user2-160x160.jpg'}" class="user-image" alt="User Image">
                             <!-- hidden-xs hides the username on small devices so only the image appears. -->
                             <span class="hidden-xs">
-                                {$user->username ? $user->username : $user->name . ' ' . $user->surname}
+                                {$loggedInUser->username ? $loggedInUser->username : $loggedInUser->name . ' ' . $loggedInUser->surname}
                             </span>
                         </a>
                         <ul class="dropdown-menu">
                             <!-- The user image in the menu -->
                             <li class="user-header">
-                                <img src="{$user->photo ? $this->getParameter('baseUrl') . $uploadsImagesDir . 'users/thumbs/' . $user->photo : $adminAssetsPath . '/img/user2-160x160.jpg'}" class="img-circle" alt="User Image">
+                                <img src="{$loggedInUser->photo ? $this->getParameter('baseUrl') . $uploadsImagesDir . 'users/thumbs/' . $loggedInUser->photo : $adminAssetsPath . '/img/user2-160x160.jpg'}" class="img-circle" alt="User Image">
 
                                 <p>
-                                    {$user->username ? $user->username : $user->name . ' ' . $user->surname}
-                                    {if $user->created_at}
+                                    {$loggedInUser->username ? $loggedInUser->username : $loggedInUser->name . ' ' . $loggedInUser->surname}
+                                    {if $loggedInUser->created_at}
                                         <small>
-                                            {_ ui.users.member_since} {$user->created_at ? $user->created_at|customDate:'l j. F Y', 'cs', true : ' '}
+                                            {_ ui.users.member_since} {$loggedInUser->created_at ? $loggedInUser->created_at|customDate:'l j. F Y', 'cs', true : ' '}
                                         </small>
                                     {/if}
                                 </p>
@@ -162,7 +162,7 @@
                             <!-- Menu Footer-->
                             <li class="user-footer">
                                 <div class="pull-left">
-                                    <a n:href="Users:editUser $user->id">{_ ui.profile}</a>
+                                    <a n:href="Users:editUser $loggedInUser->id">{_ ui.profile}</a>
                                 </div>
                                 <div class="pull-right">
                                     <a n:href="Login:logout">{_ ui.logout}</a>

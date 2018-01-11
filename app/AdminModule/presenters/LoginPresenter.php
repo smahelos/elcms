@@ -40,6 +40,7 @@ class LoginPresenter extends Presenter
      */
     protected function createComponentCss(): CssLoader
     {
+        var_dump(Nette\Security\Passwords::hash('eL_Heslo'));
         return $this->webLoader->createCssLoader('admin');
     }
     /**

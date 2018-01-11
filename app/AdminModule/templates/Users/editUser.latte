@@ -3,7 +3,7 @@
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
-        <h1>{_ ui.users.user}</h1>
+        <h1>{_ ui.users.user} {$user->username ? $user->username : $user->name . ' ' . $user->surname}</h1>
 
         {snippet breadcrumbs}
             {control breadcrumbs}
