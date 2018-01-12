@@ -52,24 +52,26 @@
                     </div>
                     <div class="col-lg-6">
                         {if $imageUrl}
-                            <img src="{$baseUrl . $imageUrl}" class="img-circle" alt="User Image">
+                            <img src="{$baseUrl . $imageUrl}" class="img" alt="User Image">
                         {/if}
                     </div>
                 </div>
             </div>
-            <div class="bg-info text-white pt-1">
-                <div class="form-group has-feedback">
-                    {input newPassword, class => 'form-control'}
+            <div class="bg-warning text-white padding-10">
+                <div class="checkboxes icheck">
+                    {input newPassword, class => 'icheckbox_flat-blue'}
                 </div>
-                <div class="form-group has-feedback hidden">
-                    {label password}
-                    {input password, class => 'form-control'}
-                    <span class="glyphicon glyphicon-lock form-control-feedback"></span>
-                </div>
-                <div class="form-group has-feedback hidden">
-                    {label password2}
-                    {input password2, class => 'form-control'}
-                    <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+                <div class="passwordInputs" style="display: none;">
+                    <div class="form-group has-feedback">
+                        {label password}
+                        {input password, class => 'form-control'}
+                        <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+                    </div>
+                    <div class="form-group has-feedback">
+                        {label password2}
+                        {input password2, class => 'form-control'}
+                        <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+                    </div>
                 </div>
             </div>
         </div>
