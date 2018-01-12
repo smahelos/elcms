@@ -4,6 +4,8 @@ $( document ).ready(function()
     //datagrid item active after click
     clickDatagridItemClass();
 
+    showPasswordInputs();
+
     //iCheck for checkbox and radio inputs
     //Flat red color scheme for iCheck
     $('.icheck input[type="checkbox"], .icheck input[type="radio"]').iCheck({
@@ -20,6 +22,8 @@ $.nette.ext('snippets').after(function () {
 
     //datagrid item active after click
     clickDatagridItemClass();
+
+    showPasswordInputs();
 
     //iCheck for checkbox and radio inputs
     //Flat red color scheme for iCheck
@@ -41,4 +45,17 @@ function clickDatagridItemClass()
         $('a.editArticleItem').removeClass('active');
         $(this).addClass('active');
     });
+}
+
+//* get datagrid item active after click
+function showPasswordInputs()
+{
+    $('input[name="newPassword"]').on('ifChanged', function(){
+        if (this.checked) {
+            $('.passwordInputs').removeClass('hidden').show('100');
+        } else {
+            $('.passwordInputs').hide('100');
+        }
+    });
+
 }
