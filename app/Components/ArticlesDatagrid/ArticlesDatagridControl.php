@@ -94,6 +94,7 @@ class ArticlesDatagridControl extends \Nette\Application\UI\Control
             $grid->setSortableHandler('articlesDatagrid:sort!');
             $grid->addColumnText('title', '');
         } else {
+            $grid->setTemplateFile(__DIR__ . '/customArticlesDatagridTemplate.latte');
             $grid->addColumnText('id', 'ublaboo_datagrid.ID')
                 ->setSortable();
             $grid->addColumnLink('title', 'ublaboo_datagrid.name', 'editArticle!')
