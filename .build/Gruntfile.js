@@ -4,16 +4,16 @@
 module.exports = function (grunt) { // jshint ignore:line
 
     grunt.initConfig({
-        pkg: grunt.file.readJSON('../www/Themes/admin/AdminLTE-2.4.2/package.json'),
+        pkg: grunt.file.readJSON('../vendor/almasaeed2010/adminlte/package.json'),
         "file-creator": {
             createMainLess: {
-                "c:/www_root/www/elcms/www/Themes/admin/AdminLTE-2.4.2/build/less/main.less": function (fs, fd, done) {
+                "../www/Themes/admin/AdminLTE-2.4.2/build/less/main.less": function (fs, fd, done) {
                     var files = grunt.file.expand([
-                        "../www/Themes/admin/AdminLTE-2.4.2/build/less/AdminLTE.less",
-                        "../www/Themes/admin/AdminLTE-2.4.2/bower_components/bootstrap/less/**/*.less",
-                        "../www/Themes/admin/AdminLTE-2.4.2/bower_components/font-awesome/less/*.less",
-                        "../www/Themes/admin/AdminLTE-2.4.2/bower_components/morris.js/less/*.less",
-                        "../www/Themes/admin/AdminLTE-2.4.2/bower_components/bootstrap-datepicker/build/build_standalone.less",
+                        "../vendor/almasaeed2010/adminlte/build/less/AdminLTE.less",
+                        "../vendor/almasaeed2010/adminlte/bower_components/bootstrap/less/bootstrap.less",
+                        "../vendor/almasaeed2010/adminlte/bower_components/font-awesome/less/*.less",
+                        "../vendor/almasaeed2010/adminlte/bower_components/morris.js/less/*.less",
+                        "../vendor/almasaeed2010/adminlte/bower_components/bootstrap-datepicker/build/build_standalone.less",
                         "../www/Themes/admin/AdminLTE-2.4.2/build/less/custom.less",
                         "../www/Themes/admin/AdminLTE-2.4.2/build/less/aceEditor.less",
                         "../www/Themes/admin/AdminLTE-2.4.2/build/less/comments.less",
@@ -28,20 +28,29 @@ module.exports = function (grunt) { // jshint ignore:line
                 }
             }
         },
+        mkdir: {
+            options: {
+                mode: '0700',
+                create: ['../log/']
+            },
+            your_target: {
+                // Target-specific options go here.
+            }
+        },
         watch: {
             less: {
                 // Compiles less files upon saving
-                files: ['../www/Themes/admin/AdminLTE-2.4.2/build/less/*.less'],
+                files: ['../vendor/almasaeed2010/adminlte/build/less/*.less'],
                 tasks: ['less:development', 'less:production', 'replace', 'notify:less']
             },
             js: {
                 // Compile js files upon saving
-                files: ['../www/Themes/admin/AdminLTE-2.4.2/build/js/*.js'],
+                files: ['../vendor/almasaeed2010/adminlte/build/js/*.js'],
                 tasks: ['js', 'notify:js']
             },
             skins: {
                 // Compile any skin less files upon saving
-                files: ['../www/Themes/admin/AdminLTE-2.4.2/build/less/skins/*.less'],
+                files: ['../vendor/almasaeed2010/adminlte/build/less/skins/*.less'],
                 tasks: ['less:skins', 'less:minifiedSkins', 'notify:less']
             }
         },
@@ -67,15 +76,15 @@ module.exports = function (grunt) { // jshint ignore:line
             development: {
                 options: {
                     sourceMap: true,
-                    sourceMapFilename: 'c:/www_root/www/elcms/www/Themes/admin/AdminLTE-2.4.2/dist/css/main.css.map',
-                    sourceMapBasepath: 'c:/www_root/www/elcms/www/Themes/admin/AdminLTE-2.4.2/dist/css/',
-                    sourceMapRootpath: "c:/www_root/www/elcms/www/",
+                    sourceMapFilename: '../www/Themes/admin/AdminLTE-2.4.2/dist/css/main.css.map',
+                    sourceMapBasepath: '../www/Themes/admin/AdminLTE-2.4.2/dist/css/',
+                    sourceMapRootpath: '',
                     syncImport: true
                     //sourceMapAsFile: true
                 },
                 files: {
                     // compilation.css  :  source.less
-                    '../www/Themes/admin/AdminLTE-2.4.2/dist/css/main.css': '../www/Themes/admin/AdminLTE-2.4.2/build/less/main.less',
+                    '../www/Themes/admin/AdminLTE-2.4.2/dist/css/main.css': '../www/Themes/admin/AdminLTE-2.4.2/build/less/main.less'
                     // AdminLTE without plugins
                     ////'../www/Themes/admin/AdminLTE-2.4.2/dist/css/alt/AdminLTE-without-plugins.css' : '../www/Themes/admin/AdminLTE-2.4.2/build/less/AdminLTE-without-plugins.less',
                     // Separate plugins
@@ -95,13 +104,13 @@ module.exports = function (grunt) { // jshint ignore:line
                 },
                 files: {
                     // compilation.css  :  source.less
-                    '../www/Themes/admin/AdminLTE-2.4.2/dist/css/AdminLTE.min.css': '../www/Themes/admin/AdminLTE-2.4.2/build/less/AdminLTE.less',
+                    '../www/Themes/admin/AdminLTE-2.4.2/dist/css/AdminLTE.min.css': '../vendor/almasaeed2010/adminlte/build/less/AdminLTE.less',
                     // AdminLTE without plugins
-                    '../www/Themes/admin/AdminLTE-2.4.2/dist/css/alt/AdminLTE-without-plugins.min.css': '../www/Themes/admin/AdminLTE-2.4.2/build/less/AdminLTE-without-plugins.less',
+                    '../www/Themes/admin/AdminLTE-2.4.2/dist/css/alt/AdminLTE-without-plugins.min.css': '../vendor/almasaeed2010/adminlte/build/less/AdminLTE-without-plugins.less',
                     // Separate plugins
-                    '../www/Themes/admin/AdminLTE-2.4.2/dist/css/alt/AdminLTE-select2.min.css': '../www/Themes/admin/AdminLTE-2.4.2/build/less/select2.less',
-                    '../www/Themes/admin/AdminLTE-2.4.2/dist/css/alt/AdminLTE-fullcalendar.min.css': '../www/Themes/admin/AdminLTE-2.4.2/build/less/fullcalendar.less',
-                    '../www/Themes/admin/AdminLTE-2.4.2/dist/css/alt/AdminLTE-bootstrap-social.min.css': '../www/Themes/admin/AdminLTE-2.4.2/build/less/bootstrap-social.less',
+                    '../www/Themes/admin/AdminLTE-2.4.2/dist/css/alt/AdminLTE-select2.min.css': '../vendor/almasaeed2010/adminlte/build/less/select2.less',
+                    '../www/Themes/admin/AdminLTE-2.4.2/dist/css/alt/AdminLTE-fullcalendar.min.css': '../vendor/almasaeed2010/adminlte/build/less/fullcalendar.less',
+                    '../www/Themes/admin/AdminLTE-2.4.2/dist/css/alt/AdminLTE-bootstrap-social.min.css': '../vendor/almasaeed2010/adminlte/build/less/bootstrap-social.less',
                     // Custom CSS
                     '../www/Themes/admin/AdminLTE-2.4.2/dist/css/custom.min.css': '../www/Themes/admin/AdminLTE-2.4.2/build/less/custom.less',
                     '../www/Themes/admin/AdminLTE-2.4.2/dist/css/comments.min.css': '../www/Themes/admin/AdminLTE-2.4.2/build/less/comments.less',
@@ -111,19 +120,19 @@ module.exports = function (grunt) { // jshint ignore:line
             // Non minified skin files
             skins: {
                 files: {
-                    '../www/Themes/admin/AdminLTE-2.4.2/dist/css/skins/skin-blue.css': '../www/Themes/admin/AdminLTE-2.4.2/build/less/skins/skin-blue.less',
-                    '../www/Themes/admin/AdminLTE-2.4.2/dist/css/skins/skin-black.css': '../www/Themes/admin/AdminLTE-2.4.2/build/less/skins/skin-black.less',
-                    '../www/Themes/admin/AdminLTE-2.4.2/dist/css/skins/skin-yellow.css': '../www/Themes/admin/AdminLTE-2.4.2/build/less/skins/skin-yellow.less',
-                    '../www/Themes/admin/AdminLTE-2.4.2/dist/css/skins/skin-green.css': '../www/Themes/admin/AdminLTE-2.4.2/build/less/skins/skin-green.less',
-                    '../www/Themes/admin/AdminLTE-2.4.2/dist/css/skins/skin-red.css': '../www/Themes/admin/AdminLTE-2.4.2/build/less/skins/skin-red.less',
-                    '../www/Themes/admin/AdminLTE-2.4.2/dist/css/skins/skin-purple.css': '../www/Themes/admin/AdminLTE-2.4.2/build/less/skins/skin-purple.less',
-                    '../www/Themes/admin/AdminLTE-2.4.2/dist/css/skins/skin-blue-light.css': '../www/Themes/admin/AdminLTE-2.4.2/build/less/skins/skin-blue-light.less',
-                    '../www/Themes/admin/AdminLTE-2.4.2/dist/css/skins/skin-black-light.css': '../www/Themes/admin/AdminLTE-2.4.2/build/less/skins/skin-black-light.less',
-                    '../www/Themes/admin/AdminLTE-2.4.2/dist/css/skins/skin-yellow-light.css': '../www/Themes/admin/AdminLTE-2.4.2/build/less/skins/skin-yellow-light.less',
-                    '../www/Themes/admin/AdminLTE-2.4.2/dist/css/skins/skin-green-light.css': '../www/Themes/admin/AdminLTE-2.4.2/build/less/skins/skin-green-light.less',
-                    '../www/Themes/admin/AdminLTE-2.4.2/dist/css/skins/skin-red-light.css': '../www/Themes/admin/AdminLTE-2.4.2/build/less/skins/skin-red-light.less',
-                    '../www/Themes/admin/AdminLTE-2.4.2/dist/css/skins/skin-purple-light.css': '../www/Themes/admin/AdminLTE-2.4.2/build/less/skins/skin-purple-light.less',
-                    '../www/Themes/admin/AdminLTE-2.4.2/dist/css/skins/_all-skins.css': '../www/Themes/admin/AdminLTE-2.4.2/build/less/skins/_all-skins.less'
+                    '../www/Themes/admin/AdminLTE-2.4.2/dist/css/skins/skin-blue.css':         '../vendor/almasaeed2010/adminlte/build/less/skins/skin-blue.less',
+                    '../www/Themes/admin/AdminLTE-2.4.2/dist/css/skins/skin-black.css':        '../vendor/almasaeed2010/adminlte/build/less/skins/skin-black.less',
+                    '../www/Themes/admin/AdminLTE-2.4.2/dist/css/skins/skin-yellow.css':       '../vendor/almasaeed2010/adminlte/build/less/skins/skin-yellow.less',
+                    '../www/Themes/admin/AdminLTE-2.4.2/dist/css/skins/skin-green.css':        '../vendor/almasaeed2010/adminlte/build/less/skins/skin-green.less',
+                    '../www/Themes/admin/AdminLTE-2.4.2/dist/css/skins/skin-red.css':          '../vendor/almasaeed2010/adminlte/build/less/skins/skin-red.less',
+                    '../www/Themes/admin/AdminLTE-2.4.2/dist/css/skins/skin-purple.css':       '../vendor/almasaeed2010/adminlte/build/less/skins/skin-purple.less',
+                    '../www/Themes/admin/AdminLTE-2.4.2/dist/css/skins/skin-blue-light.css':   '../vendor/almasaeed2010/adminlte/build/less/skins/skin-blue-light.less',
+                    '../www/Themes/admin/AdminLTE-2.4.2/dist/css/skins/skin-black-light.css':  '../vendor/almasaeed2010/adminlte/build/less/skins/skin-black-light.less',
+                    '../www/Themes/admin/AdminLTE-2.4.2/dist/css/skins/skin-yellow-light.css': '../vendor/almasaeed2010/adminlte/build/less/skins/skin-yellow-light.less',
+                    '../www/Themes/admin/AdminLTE-2.4.2/dist/css/skins/skin-green-light.css':  '../vendor/almasaeed2010/adminlte/build/less/skins/skin-green-light.less',
+                    '../www/Themes/admin/AdminLTE-2.4.2/dist/css/skins/skin-red-light.css':    '../vendor/almasaeed2010/adminlte/build/less/skins/skin-red-light.less',
+                    '../www/Themes/admin/AdminLTE-2.4.2/dist/css/skins/skin-purple-light.css': '../vendor/almasaeed2010/adminlte/build/less/skins/skin-purple-light.less',
+                    '../www/Themes/admin/AdminLTE-2.4.2/dist/css/skins/_all-skins.css':        '../vendor/almasaeed2010/adminlte/build/less/skins/_all-skins.less'
                 }
             },
             // Skins minified
@@ -132,19 +141,19 @@ module.exports = function (grunt) { // jshint ignore:line
                     compress: true
                 },
                 files: {
-                    '../www/Themes/admin/AdminLTE-2.4.2/dist/css/skins/skin-blue.min.css': '../www/Themes/admin/AdminLTE-2.4.2/build/less/skins/skin-blue.less',
-                    '../www/Themes/admin/AdminLTE-2.4.2/dist/css/skins/skin-black.min.css': '../www/Themes/admin/AdminLTE-2.4.2/build/less/skins/skin-black.less',
-                    '../www/Themes/admin/AdminLTE-2.4.2/dist/css/skins/skin-yellow.min.css': '../www/Themes/admin/AdminLTE-2.4.2/build/less/skins/skin-yellow.less',
-                    '../www/Themes/admin/AdminLTE-2.4.2/dist/css/skins/skin-green.min.css': '../www/Themes/admin/AdminLTE-2.4.2/build/less/skins/skin-green.less',
-                    '../www/Themes/admin/AdminLTE-2.4.2/dist/css/skins/skin-red.min.css': '../www/Themes/admin/AdminLTE-2.4.2/build/less/skins/skin-red.less',
-                    '../www/Themes/admin/AdminLTE-2.4.2/dist/css/skins/skin-purple.min.css': '../www/Themes/admin/AdminLTE-2.4.2/build/less/skins/skin-purple.less',
-                    '../www/Themes/admin/AdminLTE-2.4.2/dist/css/skins/skin-blue-light.min.css': '../www/Themes/admin/AdminLTE-2.4.2/build/less/skins/skin-blue-light.less',
-                    '../www/Themes/admin/AdminLTE-2.4.2/dist/css/skins/skin-black-light.min.css': '../www/Themes/admin/AdminLTE-2.4.2/build/less/skins/skin-black-light.less',
-                    '../www/Themes/admin/AdminLTE-2.4.2/dist/css/skins/skin-yellow-light.min.css': '../www/Themes/admin/AdminLTE-2.4.2/build/less/skins/skin-yellow-light.less',
-                    '../www/Themes/admin/AdminLTE-2.4.2/dist/css/skins/skin-green-light.min.css': '../www/Themes/admin/AdminLTE-2.4.2/build/less/skins/skin-green-light.less',
-                    '../www/Themes/admin/AdminLTE-2.4.2/dist/css/skins/skin-red-light.min.css': '../www/Themes/admin/AdminLTE-2.4.2/build/less/skins/skin-red-light.less',
-                    '../www/Themes/admin/AdminLTE-2.4.2/dist/css/skins/skin-purple-light.min.css': '../www/Themes/admin/AdminLTE-2.4.2/build/less/skins/skin-purple-light.less',
-                    '../www/Themes/admin/AdminLTE-2.4.2/dist/css/skins/_all-skins.min.css': '../www/Themes/admin/AdminLTE-2.4.2/build/less/skins/_all-skins.less'
+                    '../www/Themes/admin/AdminLTE-2.4.2/dist/css/skins/skin-blue.min.css':         '../vendor/almasaeed2010/adminlte/build/less/skins/skin-blue.less',
+                    '../www/Themes/admin/AdminLTE-2.4.2/dist/css/skins/skin-black.min.css':        '../vendor/almasaeed2010/adminlte/build/less/skins/skin-black.less',
+                    '../www/Themes/admin/AdminLTE-2.4.2/dist/css/skins/skin-yellow.min.css':       '../vendor/almasaeed2010/adminlte/build/less/skins/skin-yellow.less',
+                    '../www/Themes/admin/AdminLTE-2.4.2/dist/css/skins/skin-green.min.css':        '../vendor/almasaeed2010/adminlte/build/less/skins/skin-green.less',
+                    '../www/Themes/admin/AdminLTE-2.4.2/dist/css/skins/skin-red.min.css':          '../vendor/almasaeed2010/adminlte/build/less/skins/skin-red.less',
+                    '../www/Themes/admin/AdminLTE-2.4.2/dist/css/skins/skin-purple.min.css':       '../vendor/almasaeed2010/adminlte/build/less/skins/skin-purple.less',
+                    '../www/Themes/admin/AdminLTE-2.4.2/dist/css/skins/skin-blue-light.min.css':   '../vendor/almasaeed2010/adminlte/build/less/skins/skin-blue-light.less',
+                    '../www/Themes/admin/AdminLTE-2.4.2/dist/css/skins/skin-black-light.min.css':  '../vendor/almasaeed2010/adminlte/build/less/skins/skin-black-light.less',
+                    '../www/Themes/admin/AdminLTE-2.4.2/dist/css/skins/skin-yellow-light.min.css': '../vendor/almasaeed2010/adminlte/build/less/skins/skin-yellow-light.less',
+                    '../www/Themes/admin/AdminLTE-2.4.2/dist/css/skins/skin-green-light.min.css':  '../vendor/almasaeed2010/adminlte/build/less/skins/skin-green-light.less',
+                    '../www/Themes/admin/AdminLTE-2.4.2/dist/css/skins/skin-red-light.min.css':    '../vendor/almasaeed2010/adminlte/build/less/skins/skin-red-light.less',
+                    '../www/Themes/admin/AdminLTE-2.4.2/dist/css/skins/skin-purple-light.min.css': '../vendor/almasaeed2010/adminlte/build/less/skins/skin-purple-light.less',
+                    '../www/Themes/admin/AdminLTE-2.4.2/dist/css/skins/_all-skins.min.css':        '../vendor/almasaeed2010/adminlte/build/less/skins/_all-skins.less'
                 }
             }
         },
@@ -156,7 +165,7 @@ module.exports = function (grunt) { // jshint ignore:line
             },
             production: {
                 files: {
-                    '../www/assets/admin/js/adminlte.min.js': ['../www/Themes/admin/AdminLTE-2.4.2/dist/js/adminlte.js']
+                    '../www/assets/admin/js/adminlte.min.js': ['../vendor/almasaeed2010/adminlte/dist/js/adminlte.js']
                 }
             }
         },
@@ -181,21 +190,21 @@ module.exports = function (grunt) { // jshint ignore:line
             },
             dist: {
                 src: [
-                    '../www/Themes/admin/AdminLTE-2.4.2/bower_components/jquery/dist/jquery.min.js',
-                    '../www/Themes/admin/AdminLTE-2.4.2/bower_components/jquery-slimscroll/jquery.slimscroll.min.js',
-                    '../www/Themes/admin/AdminLTE-2.4.2/bower_components/datatables.net/js/jquery.dataTables.min.js',
-                    '../www/Themes/admin/AdminLTE-2.4.2/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js',
-                    '../www/Themes/admin/AdminLTE-2.4.2/bower_components/fastclick/lib/fastclick.js',
-                    '../www/Themes/admin/AdminLTE-2.4.2/build/js/BoxWidget.js',
-                    '../www/Themes/admin/AdminLTE-2.4.2/build/js/ControlSidebar.js',
-                    '../www/Themes/admin/AdminLTE-2.4.2/build/js/DirectChat.js',
-                    '../www/Themes/admin/AdminLTE-2.4.2/build/js/Layout.js',
-                    '../www/Themes/admin/AdminLTE-2.4.2/build/js/PushMenu.js',
-                    '../www/Themes/admin/AdminLTE-2.4.2/build/js/TodoList.js',
+                    '../vendor/almasaeed2010/adminlte/bower_components/jquery/dist/jquery.min.js',
+                    '../vendor/almasaeed2010/adminlte/bower_components/jquery-slimscroll/jquery.slimscroll.min.js',
+                    '../vendor/almasaeed2010/adminlte/bower_components/datatables.net/js/jquery.dataTables.min.js',
+                    '../vendor/almasaeed2010/adminlte/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js',
+                    '../vendor/almasaeed2010/adminlte/bower_components/fastclick/lib/fastclick.js',
+                    '../vendor/almasaeed2010/adminlte/build/js/BoxWidget.js',
+                    '../vendor/almasaeed2010/adminlte/build/js/ControlSidebar.js',
+                    '../vendor/almasaeed2010/adminlte/build/js/DirectChat.js',
+                    '../vendor/almasaeed2010/adminlte/build/js/Layout.js',
+                    '../vendor/almasaeed2010/adminlte/build/js/PushMenu.js',
+                    '../vendor/almasaeed2010/adminlte/build/js/TodoList.js',
                     //'../www/Themes/admin/AdminLTE-2.4.2/build/js/Tree.js',
-                    '../www/Themes/admin/AdminLTE-2.4.2/html5shiv/3.7.3/js/html5shiv.min.js',
-                    '../www/Themes/admin/AdminLTE-2.4.2/respond/1.4.2/js/respond.min.js',
-                    '../www/Themes/admin/AdminLTE-2.4.2/plugins/iCheck/icheck.min.js',
+                    '../vendor/almasaeed2010/adminlte/html5shiv/3.7.3/js/html5shiv.min.js',
+                    '../vendor/almasaeed2010/adminlte/respond/1.4.2/js/respond.min.js',
+                    '../vendor/almasaeed2010/adminlte/plugins/iCheck/icheck.min.js',
                     '../www/Themes/admin/AdminLTE-2.4.2/build/js/netteForms.min.js',
                     '../www/Themes/admin/AdminLTE-2.4.2/build/js/nette.ajax.2.3.0.js',
                     '../www/Themes/admin/AdminLTE-2.4.2/build/js/nette.ajax.spinner.js',
@@ -207,7 +216,7 @@ module.exports = function (grunt) { // jshint ignore:line
                     //'../vendor/ublaboo/datagrid/assets/dist/datagrid.js',
                     '../www/Themes/admin/AdminLTE-2.4.2/build/js/customUblabooDatagridTree.js', //my custom datagrid.js for this project
                     '../vendor/ublaboo/datagrid/assets/dist/datagrid-instant-url-refresh.js',
-                    '../www/Themes/admin/AdminLTE-2.4.2/bower_components/bootstrap/dist/js/bootstrap.min.js',
+                    '../vendor/almasaeed2010/adminlte/bower_components/bootstrap/dist/js/bootstrap.min.js',
                     '../vendor/smahelos/ace-builds/src-noconflict/ace.js',
                     '../www/assets/admin/libs/templateEditorFactory/templateEditorFactory.js',
                     '../www/Themes/admin/AdminLTE-2.4.2/build/js/custom.js'
@@ -219,7 +228,7 @@ module.exports = function (grunt) { // jshint ignore:line
         // Concatenate css files
         cssmin: {
             options: {
-                root: 'c:/www_root/www/elcms/www/',
+                root: 'c:/www_root/www/elcms2/',
                 shorthandCompacting: false,
                 roundingPrecision: -1,
                 sourceMap: true
@@ -228,13 +237,13 @@ module.exports = function (grunt) { // jshint ignore:line
                 files: {
                     '../www/assets/admin/css/admin.min.css': [
                         '../www/Themes/admin/AdminLTE-2.4.2/dist/css/main.css',
-                        '../www/Themes/admin/AdminLTE-2.4.2/dist/css/skins/skin-blue.min.css',
-                        '../www/Themes/admin/AdminLTE-2.4.2/bower_components/Ionicons/css/ionicons.min.css',
-                        '../www/Themes/admin/AdminLTE-2.4.2/bower_components/jvectormap/jquery-jvectormap.css',
-                        '../www/Themes/admin/AdminLTE-2.4.2/bower_components/bootstrap-daterangepicker/daterangepicker.css',
-                        '../www/Themes/admin/AdminLTE-2.4.2/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css',
-                        '../www/Themes/admin/AdminLTE-2.4.2/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css',
-                        '../www/Themes/admin/AdminLTE-2.4.2/plugins/iCheck/flat/blue.css',
+                        '../vendor/almasaeed2010/adminlte/dist/css/skins/skin-blue.css',
+                        '../vendor/almasaeed2010/adminlte/bower_components/Ionicons/css/ionicons.css',
+                        '../vendor/almasaeed2010/adminlte/bower_components/jvectormap/jquery-jvectormap.css',
+                        '../vendor/almasaeed2010/adminlte/bower_components/bootstrap-daterangepicker/daterangepicker.css',
+                        '../vendor/almasaeed2010/adminlte/bower_components/datatables.net-bs/css/dataTables.bootstrap.css',
+                        '../vendor/almasaeed2010/adminlte/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.css',
+                        '../vendor/almasaeed2010/adminlte/plugins/iCheck/flat/blue.css',
                         '../www/assets/admin/libs/templateEditorFactory/css/templateEditor.css',
                         '../vendor/ublaboo/datagrid/assets/dist/datagrid.css',
                     ]
@@ -251,21 +260,21 @@ module.exports = function (grunt) { // jshint ignore:line
                     // makes all src relative to cwd
                     {
                         expand: true,
-                        cwd: '../www/Themes/admin/AdminLTE-2.4.2/dist/img/',
+                        cwd: '../vendor/almasaeed2010/adminlte/dist/img/',
                         src: ['**'],
                         dest: '../www/assets/admin/img/',
                         filter: 'isFile'
                     },
                     {
                         expand: true,
-                        cwd: '../www/Themes/admin/AdminLTE-2.4.2/bower_components/bootstrap/fonts/',
+                        cwd: '../vendor/almasaeed2010/adminlte/bower_components/bootstrap/fonts/',
                         src: ['**'],
                         dest: '../www/assets/admin/fonts/',
                         filter: 'isFile'
                     },
                     {
                         expand: true,
-                        cwd: '../www/Themes/admin/AdminLTE-2.4.2/bower_components/font-awesome/fonts/',
+                        cwd: '../vendor/almasaeed2010/adminlte/bower_components/font-awesome/fonts/',
                         src: ['**'],
                         dest: '../www/assets/admin/fonts/',
                         filter: 'isFile'
@@ -292,7 +301,7 @@ module.exports = function (grunt) { // jshint ignore:line
                 files: [
                     {
                         expand: true,
-                        cwd: '../www/Themes/admin/AdminLTE-2.4.2/plugins/iCheck/flat/',
+                        cwd: '../vendor/almasaeed2010/adminlte/plugins/iCheck/flat/',
                         src: [
                             '**/blue.{png,jpg,svg}',
                             '**/blue@2x.{png,jpg,svg}',
@@ -324,7 +333,7 @@ module.exports = function (grunt) { // jshint ignore:line
         // Replace image paths in AdminLTE without plugins
         replace: {
             withoutPlugins: {
-                src: ['../www/Themes/admin/AdminLTE-2.4.2/dist/css/alt/AdminLTE-without-plugins.css'],
+                src: ['../vendor/almasaeed2010/adminlte/dist/css/alt/AdminLTE-without-plugins.css'],
                 dest: '../www/Themes/admin/AdminLTE-2.4.2/dist/css/alt/AdminLTE-without-plugins.css',
                 replacements: [
                     {
@@ -334,7 +343,7 @@ module.exports = function (grunt) { // jshint ignore:line
                 ]
             },
             withoutPluginsMin: {
-                src: ['../www/Themes/admin/AdminLTE-2.4.2/dist/css/alt/AdminLTE-without-plugins.min.css'],
+                src: ['../vendor/almasaeed2010/adminlte/dist/css/alt/AdminLTE-without-plugins.min.css'],
                 dest: '../www/Themes/admin/AdminLTE-2.4.2/dist/css/alt/AdminLTE-without-plugins.min.css',
                 replacements: [
                     {
@@ -372,6 +381,21 @@ module.exports = function (grunt) { // jshint ignore:line
                     }
                 ]
             },
+            // Remove imports of mixins and variables, because we are mixing bootstrap.less with AdminLTE.less
+            removeMixinsAndVariablesImports: {
+                src: ['../vendor/almasaeed2010/adminlte/build/less/AdminLTE.less'],
+                dest: '../vendor/almasaeed2010/adminlte/build/less/AdminLTE.less',
+                replacements: [
+                    {
+                        from: '@import (reference) "../bootstrap-less/mixins";',
+                        to: '//@import (reference) "../bootstrap-less/mixins";'
+                    },
+                    {
+                        from: '@import (reference) "../bootstrap-less/variables";',
+                        to: '//@import (reference) "../bootstrap-less/variables";'
+                    }
+                ]
+            }
         },
 
         // Build the documentation files
@@ -380,10 +404,10 @@ module.exports = function (grunt) { // jshint ignore:line
                 src: ['*.html'], // Source files
                 dest: '../www/Themes/admin/AdminLTE-2.4.2/documentation/', // Destination directory
                 flatten: true,
-                cwd: '../www/Themes/admin/AdminLTE-2.4.2/documentation/build',
+                cwd: '../vendor/almasaeed2010/adminlte/documentation/build',
                 options: {
                     silent: true,
-                    includePath: '../www/Themes/admin/AdminLTE-2.4.2/documentation/build/include'
+                    includePath: '../vendor/almasaeed2010/adminlte/documentation/build/include'
                 }
             }
         },
@@ -394,7 +418,7 @@ module.exports = function (grunt) { // jshint ignore:line
                 files: [
                     {
                         expand: true,
-                        cwd: '../www/Themes/admin/AdminLTE-2.4.2/build/img/',
+                        cwd: '../vendor/almasaeed2010/adminlte/build/img/',
                         src: ['**/*.{png,jpg,gif,svg,jpeg}'],
                         dest: '../www/Themes/admin/AdminLTE-2.4.2/dist/img/'
                     }
@@ -405,28 +429,28 @@ module.exports = function (grunt) { // jshint ignore:line
         // Validate JS code
         jshint: {
             options: {
-                jshintrc: '../www/Themes/admin/AdminLTE-2.4.2/build/js/.jshintrc'
+                jshintrc: '../vendor/almasaeed2010/adminlte/build/js/.jshintrc'
             },
             grunt: {
                 options: {
-                    jshintrc: '../www/Themes/admin/AdminLTE-2.4.2/build/grunt/.jshintrc'
+                    jshintrc: '../vendor/almasaeed2010/adminlte/build/grunt/.jshintrc'
                 },
-                src: '../www/Themes/admin/AdminLTE-2.4.2/Gruntfile.js'
+                src: '../vendor/almasaeed2010/adminlte/Gruntfile.js'
             },
             core: {
-                src: '../www/Themes/admin/AdminLTE-2.4.2/build/js/*.js'
+                src: '../vendor/almasaeed2010/adminlte/build/js/*.js'
             },
             demo: {
-                src: '../www/Themes/admin/AdminLTE-2.4.2/dist/js/demo.js'
+                src: '../vendor/almasaeed2010/adminlte/dist/js/demo.js'
             },
             pages: {
-                src: '../www/Themes/admin/AdminLTE-2.4.2/dist/js/pages/*.js'
+                src: '../vendor/almasaeed2010/adminlte/dist/js/pages/*.js'
             }
         },
 
         jscs: {
             options: {
-                config: '../www/Themes/admin/AdminLTE-2.4.2/build/js/.jscsrc'
+                config: '../vendor/almasaeed2010/adminlte/build/js/.jscsrc'
             },
             core: {
                 src: '<%= jshint.core.src %>'
@@ -439,7 +463,7 @@ module.exports = function (grunt) { // jshint ignore:line
         // Validate CSS files
         csslint: {
             options: {
-                csslintrc: '../www/Themes/admin/AdminLTE-2.4.2/build/less/.csslintrc'
+                csslintrc: '../vendor/almasaeed2010/adminlte/build/less/.csslintrc'
             },
             dist: [
                 'dist/css/AdminLTE.css'
@@ -451,14 +475,14 @@ module.exports = function (grunt) { // jshint ignore:line
             options: {
                 relaxerror: ['W005']
             },
-            files: ['../www/Themes/admin/AdminLTE-2.4.2/pages/**/*.html', '*.html']
+            files: ['../vendor/almasaeed2010/adminlte/pages/**/*.html', '*.html']
         },
 
         // Delete images in build directory
         // After compressing the images in the build/img dir, there is no need
         // for them
         clean: {
-            build: ['../www/Themes/admin/AdminLTE-2.4.2/build/img/*'],
+            build: ['../vendor/almasaeed2010/adminlte/build/img/*'],
             removeMainLess: {
                 options: {
                     force: true
@@ -474,12 +498,12 @@ module.exports = function (grunt) { // jshint ignore:line
                 files: [{
                     // src and dest are the same; merge-source-maps appends source map info to target file
                     src: [
-                        '../www/Themes/admin/AdminLTE-2.4.2/dist/css/AdminLTE.css',
-                        '../www/Themes/admin/AdminLTE-2.4.2/dist/css/custom.css',
-                        '../www/Themes/admin/AdminLTE-2.4.2/dist/alt/AdminLTE-without-plugins.min.css',
-                        '../www/Themes/admin/AdminLTE-2.4.2/dist/alt/AdminLTE-select2.min.css',
-                        '../www/Themes/admin/AdminLTE-2.4.2/dist/alt/AdminLTE-fullcalendar.min.css',
-                        '../www/Themes/admin/AdminLTE-2.4.2/dist/alt/AdminLTE-bootstrap-social.min.css'
+                        '../vendor/almasaeed2010/adminlte/dist/css/AdminLTE.css',
+                        '../vendor/almasaeed2010/adminlte/dist/css/custom.css',
+                        '../vendor/almasaeed2010/adminlte/dist/alt/AdminLTE-without-plugins.min.css',
+                        '../vendor/almasaeed2010/adminlte/dist/alt/AdminLTE-select2.min.css',
+                        '../vendor/almasaeed2010/adminlte/dist/alt/AdminLTE-fullcalendar.min.css',
+                        '../vendor/almasaeed2010/adminlte/dist/alt/AdminLTE-bootstrap-social.min.css'
                     ],
                     expand: true
                 }]
@@ -493,12 +517,12 @@ module.exports = function (grunt) { // jshint ignore:line
                 options: {},
                 files: {
                     '../www/Themes/admin/AdminLTE-2.4.2/dist/css/admin.min.css.map': [
-                        '../www/Themes/admin/AdminLTE-2.4.2/dist/css/AdminLTE.css',
+                        '../vendor/almasaeed2010/adminlte/dist/css/AdminLTE.css',
                         '../www/Themes/admin/AdminLTE-2.4.2/dist/css/custom.css',
-                        '../www/Themes/admin/AdminLTE-2.4.2/dist/alt/AdminLTE-without-plugins.min.css',
-                        '../www/Themes/admin/AdminLTE-2.4.2/dist/alt/AdminLTE-select2.min.css',
-                        '../www/Themes/admin/AdminLTE-2.4.2/dist/alt/AdminLTE-fullcalendar.min.css',
-                        '../www/Themes/admin/AdminLTE-2.4.2/dist/alt/AdminLTE-bootstrap-social.min.css'
+                        '../www/Themes/admin/AdminLTE-2.4.2/dist/css/alt/AdminLTE-without-plugins.min.css',
+                        '../vendor/almasaeed2010/adminlte/dist/alt/AdminLTE-select2.min.css',
+                        '../vendor/almasaeed2010/adminlte/dist/alt/AdminLTE-fullcalendar.min.css',
+                        '../vendor/almasaeed2010/adminlte/dist/alt/AdminLTE-bootstrap-social.min.css'
                     ]
                 }
             }
@@ -542,6 +566,8 @@ module.exports = function (grunt) { // jshint ignore:line
     grunt.loadNpmTasks('grunt-merge-source-maps');
     // A grunt task that creates/writes to files from Javascript functions
     grunt.loadNpmTasks('grunt-file-creator');
+    // Create directories with Grunt
+    grunt.loadNpmTasks('grunt-mkdir');
 
     grunt.option('stack', true);
 
@@ -556,7 +582,8 @@ module.exports = function (grunt) { // jshint ignore:line
     grunt.registerTask('default', ['watch']);
 
     // Assets Task
-    grunt.registerTask('assets', ['css', 'cssmin', 'concat', 'uglify', 'copy', 'replace']);
+    //grunt.registerTask('assets', ['replace:', 'css', 'cssmin', 'concat', 'uglify', 'copy', 'replace']);
+    grunt.registerTask('assets', ['mkdir', 'replace:removeMixinsAndVariablesImports', 'css', 'cssmin', 'concat', 'uglify', 'copy', 'replace:withoutPlugins', 'replace:withoutPluginsMin', 'replace:assetsCssMapsPaths', 'replace:tempCssMapsPaths']);
 
     // Concat Css Source Maps Task
     grunt.registerTask('concat_sourcemap', ['concat_sourcemap:css_files']);
