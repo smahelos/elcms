@@ -56,8 +56,8 @@ class ArticleFormControl extends Control
         parent::__construct(); // pokud je konstruktor předka bez parametrů
 
         $this->id = $id;
-        $this->defaultTemplatesDir = '/elcms/app/FrontModule/templates/Articles/';
-        $this->defaultTemplatesDirPath = $_SERVER['DOCUMENT_ROOT'] . '/elcms/app/FrontModule/templates/Articles/';
+        $this->defaultTemplatesDir = '../FrontModule/templates/Articles/';
+        $this->defaultTemplatesDirPath = $_SERVER['DOCUMENT_ROOT'] . '/../app/FrontModule/templates/Articles/';
         $this->articleManager = $articleManager;
         $this->commentsManager = $commentsManager;
     }
@@ -67,12 +67,9 @@ class ArticleFormControl extends Control
      */
     public function createComponentForm(): \Nette\Application\UI\Form
     {
-        $defaultArticleValues = [];
         $article = null;
-
         $httpRequest = $this->presenter->getHttpRequest();
         $currentItemId = $httpRequest->getQuery('articlesDatagrid-item_id');
-
         if (NULL !== $currentItemId && '' !== $currentItemId) {
             $this->id = (int)$currentItemId;
         }
@@ -80,69 +77,72 @@ class ArticleFormControl extends Control
             $article = $this->articleManager->getArticleById($this->id);
         }
 
-        if (null !== $article) {
-            $defaultArticleValues['parent'] = $article['parent'];
-            if ($defaultArticleValues['parent'] === null) {
-                $defaultArticleValues['parent'] = 0;
-            }
-            $defaultArticleValues['template'] = $article['template'];
-            $defaultArticleValues['title'] = $article['title'];
-            $defaultArticleValues['menuindex'] = $article['menuindex'];
-            $defaultArticleValues['show_in_menu'] = $article['show_in_menu'];
-            $defaultArticleValues['perex'] = $article['perex'];
-            $defaultArticleValues['content'] = $article['content'];
-            $defaultArticleValues['published'] = $article['published'];
-            $defaultArticleValues['deleted'] = $article['deleted'];
-        } else {
-            $defaultArticleValues['parent'] = 0;
-            $defaultArticleValues['template'] = 'default.latte';
-            $defaultArticleValues['title'] = '';
-            $defaultArticleValues['menuindex'] = 0;
-            $defaultArticleValues['show_in_menu'] = 1;
-            $defaultArticleValues['perex'] = '';
-            $defaultArticleValues['content'] = '';
-            $defaultArticleValues['published'] = 0;
-            $defaultArticleValues['deleted'] = 0;
-        }
-
         $form = new Form;
 
-        $form->addText('parent', 'Rodič')
-            ->setDefaultValue($defaultArticleValues['parent']);
-            //->setRequired();
+        $form->addText('parent', 'Rodič');
 
         $form->addSelect('template', 'Šablona', $this->getTemplates())
             //->setPrompt($defaultArticleValues['template'])
-            ->setDefaultValue($defaultArticleValues['template'])
             ->setRequired();
 
-        $form->addText('menuindex', 'Menuindex (pořadí ve stromu dokumentů)')
-            ->setDefaultValue($defaultArticleValues['menuindex']);
-
-        $form->addCheckbox('show_in_menu', 'Zobrazit v menu')
-            ->setDefaultValue($defaultArticleValues['show_in_menu']);
+        $form->addText('menuindex', 'Menuindex (pořadí ve stromu dokumentů)');
 
         $form->addText('title', 'Titulek')
-            ->setDefaultValue($defaultArticleValues['title'])
             ->setRequired();
 
-        $form->addTextArea('perex', 'Perex')
-            ->setDefaultValue($defaultArticleValues['perex']);
+        $form->addTextArea('perex', 'Perex');
 
         $form->addTextArea('content', 'Obsah')
-            ->setDefaultValue($defaultArticleValues['content'])
             ->setRequired();
 
-        $form->addCheckbox('published', 'Zveřejněn')
-            ->setDefaultValue($defaultArticleValues['published']);
+        $form->addCheckbox('published', 'Zveřejněn');
 
-        $form->addCheckbox('deleted', 'Smazán')
-            ->setDefaultValue($defaultArticleValues['deleted']);
+        $form->addCheckbox('deleted', 'Smazán');
 
-        $form->addHidden('articleId')
-            ->setDefaultValue($this->id);
+        $form->addCheckbox('show_in_menu', 'Zobrazit v menu');
+
+        $form->addText('created_at', 'Datum a čas vytvoření')
+            ->setAttribute('placeholder', 'yyyy-mm-dd hh:mm');
+
+        $form->addText('published_at', 'Datum a čas zveřejnění')
+            ->setAttribute('placeholder', 'yyyy-mm-dd hh:mm');
+
+        $form->addText('updated_at', 'Datum a čas poslední úpravy')
+            ->setAttribute('placeholder', 'yyyy-mm-dd hh:mm');
+
+        $form->addHidden('articleId');
 
         $form->addSubmit('submit', 'Uložit a publikovat');
+
+        $parent = 0;
+        if (null !== $article) {
+            $parent = $article['parent'];
+            if ($article['parent'] === null) {
+                $parent = 0;
+            }
+
+            $form->setDefaults([
+                'parent' => $parent,
+                'template' => $article['template'],
+                'title' => $article['title'],
+                'menuindex' => $article['menuindex'],
+                'show_in_menu' => $article['show_in_menu'],
+                'perex' => $article['perex'],
+                'content' => $article['content'],
+                'published' => $article['published'],
+                'deleted' => $article['deleted'],
+                'created_at' => $article['created_at'],
+                'published_at' => $article['published_at'],
+                'updated_at' => $article['updated_at']
+            ]);
+        } else {
+            $form->setDefaults([
+                'parent' => $parent,
+                'template' => 'default.latte',
+                'menuindex' => $this->articleManager->getHighestMenuIndexInNode(null) + 1,
+                'show_in_menu' => 1,
+            ]);
+        }
 
         $form->onSuccess[] = [$this, 'processForm'];
 
@@ -164,7 +164,7 @@ class ArticleFormControl extends Control
     public function render()
     {
         $template = $this->template;
-
+        $template->templateName = 'default.latte';
         $httpRequest = $this->presenter->getHttpRequest();
         $currentItemId = $httpRequest->getQuery('articlesDatagrid-item_id');
 

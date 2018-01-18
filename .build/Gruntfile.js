@@ -193,8 +193,14 @@ module.exports = function (grunt) { // jshint ignore:line
                     '../vendor/almasaeed2010/adminlte/bower_components/jquery/dist/jquery.min.js',
                     '../vendor/almasaeed2010/adminlte/bower_components/jquery-slimscroll/jquery.slimscroll.min.js',
                     '../vendor/almasaeed2010/adminlte/bower_components/datatables.net/js/jquery.dataTables.min.js',
+                    // '../vendor/almasaeed2010/adminlte/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js',
+                    // '../vendor/almasaeed2010/adminlte/bower_components/bootstrap-datepicker/dist/locales/bootstrap-datepicker.cs.min.js',
+                    '../vendor/moment/moment/min/moment-with-locales.min.js',
+                    '../vendor/eonasdan/bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js',
                     '../vendor/almasaeed2010/adminlte/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js',
                     '../vendor/almasaeed2010/adminlte/bower_components/fastclick/lib/fastclick.js',
+                    '../vendor/almasaeed2010/adminlte/bower_components/ckeditor/ckeditor.js',
+                    //'../vendor/almasaeed2010/adminlte/bower_components/ckeditor/config.js',
                     '../vendor/almasaeed2010/adminlte/build/js/BoxWidget.js',
                     '../vendor/almasaeed2010/adminlte/build/js/ControlSidebar.js',
                     '../vendor/almasaeed2010/adminlte/build/js/DirectChat.js',
@@ -228,7 +234,7 @@ module.exports = function (grunt) { // jshint ignore:line
         // Concatenate css files
         cssmin: {
             options: {
-                root: 'c:/www_root/www/elcms2/',
+                root: 'c:/www_root/www/elcms4/',
                 shorthandCompacting: false,
                 roundingPrecision: -1,
                 sourceMap: true
@@ -241,11 +247,12 @@ module.exports = function (grunt) { // jshint ignore:line
                         '../vendor/almasaeed2010/adminlte/bower_components/Ionicons/css/ionicons.css',
                         '../vendor/almasaeed2010/adminlte/bower_components/jvectormap/jquery-jvectormap.css',
                         '../vendor/almasaeed2010/adminlte/bower_components/bootstrap-daterangepicker/daterangepicker.css',
+                        '../vendor/eonasdan/bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.css',
                         '../vendor/almasaeed2010/adminlte/bower_components/datatables.net-bs/css/dataTables.bootstrap.css',
                         '../vendor/almasaeed2010/adminlte/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.css',
                         '../vendor/almasaeed2010/adminlte/plugins/iCheck/flat/blue.css',
                         '../www/assets/admin/libs/templateEditorFactory/css/templateEditor.css',
-                        '../vendor/ublaboo/datagrid/assets/dist/datagrid.css',
+                        '../vendor/ublaboo/datagrid/assets/dist/datagrid.css'
                     ]
                 }
             }
@@ -292,7 +299,54 @@ module.exports = function (grunt) { // jshint ignore:line
                         src: ['**/datagrid.css'],
                         dest: '../www/Themes/admin/AdminLTE-2.4.2/dist/css/',
                         filter: 'isFile'
+                    },
+                    {
+                        expand: true,
+                        cwd: '../vendor/almasaeed2010/adminlte/bower_components/ckeditor/',
+                        src: ['config.js'],
+                        dest: '../www/assets/admin/libs/ckeditor/',
+                        filter: 'isFile'
+                    },
+                    {
+                        expand: true,
+                        cwd: '../vendor/almasaeed2010/adminlte/bower_components/ckeditor/',
+                        src: ['styles.js'],
+                        dest: '../www/assets/admin/libs/ckeditor/',
+                        filter: 'isFile'
+                    },
+                    {
+                        expand: true,
+                        cwd: '../vendor/almasaeed2010/adminlte/bower_components/ckeditor/',
+                        src: ['contents.css'],
+                        dest: '../www/assets/admin/libs/ckeditor/',
+                        filter: 'isFile'
+                    },
+                    {
+                        expand: true,
+                        cwd: '../vendor/almasaeed2010/adminlte/bower_components/ckeditor/skins/',
+                        src: ['**'],
+                        dest: '../www/assets/admin/libs/ckeditor/skins/',
+                        filter: 'isFile'
+                    },
+                    {
+                        expand: true,
+                        cwd: '../vendor/almasaeed2010/adminlte/bower_components/ckeditor/lang/',
+                        src: ['**'],
+                        dest: '../www/assets/admin/libs/ckeditor/lang/'
+                    },
+                    {
+                        expand: true,
+                        cwd: '../vendor/almasaeed2010/adminlte/bower_components/ckeditor/plugins/',
+                        src: ['**'],
+                        dest: '../www/assets/admin/libs/ckeditor/plugins/'
+                    },
+                    {
+                        expand: true,
+                        cwd: '../vendor/sunhater/kcfinder/',
+                        src: ['**'],
+                        dest: '../www/assets/admin/libs/kcfinder/'
                     }
+
                     // flattens results to a single level
                     //{expand: true, flatten: true, src: ['path/**'], dest: 'dest/', filter: 'isFile'}
                 ]
@@ -378,6 +432,24 @@ module.exports = function (grunt) { // jshint ignore:line
                     {
                         from: '"..\\\\vendor\\\\ublaboo\\\\datagrid\\\\assets\\\\dist',
                         to: '"..\\\\..\\\\..\\\\Themes\\\\admin\\\\AdminLTE-2.4.2\\\\dist\\\\css'
+                    }
+                ]
+            },
+            updateKcFinderConfig: {
+                src: ['../www/assets/admin/libs/kcfinder/conf/config.php'],
+                dest: '../www/assets/admin/libs/kcfinder/conf/config.php',
+                replacements: [
+                    {
+                        from: '\'disabled\' => true,',
+                        to: '\'disabled\' => false,'
+                    },
+                    {
+                        from: '\'uploadURL\' => "upload",',
+                        to: '\'uploadURL\' => "/assets/uploads/",'
+                    },
+                    {
+                        from: '\'uploadDir\' => "",',
+                        to: '\'uploadDir\' => __DIR__ . "/../../../../uploads/",'
                     }
                 ]
             },
@@ -583,7 +655,7 @@ module.exports = function (grunt) { // jshint ignore:line
 
     // Assets Task
     //grunt.registerTask('assets', ['replace:', 'css', 'cssmin', 'concat', 'uglify', 'copy', 'replace']);
-    grunt.registerTask('assets', ['mkdir', 'replace:removeMixinsAndVariablesImports', 'css', 'cssmin', 'concat', 'uglify', 'copy', 'replace:withoutPlugins', 'replace:withoutPluginsMin', 'replace:assetsCssMapsPaths', 'replace:tempCssMapsPaths']);
+    grunt.registerTask('assets', ['mkdir', 'replace:removeMixinsAndVariablesImports', 'css', 'cssmin', 'concat', 'uglify', 'copy', 'replace:withoutPlugins', 'replace:withoutPluginsMin', 'replace:assetsCssMapsPaths', 'replace:tempCssMapsPaths', 'replace:updateKcFinderConfig']);
 
     // Concat Css Source Maps Task
     grunt.registerTask('concat_sourcemap', ['concat_sourcemap:css_files']);

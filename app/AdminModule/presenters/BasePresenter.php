@@ -243,7 +243,7 @@ class BasePresenter extends Presenter
             $id = $httpRequest->getPost('articleId');
         }
 
-        if (null !== $id) {
+        if (null !== $id && $id !== '') {
             $this->articleManager->updateArticle($id, $values);
         } else {
             $this->articleManager->insertArticle($values);

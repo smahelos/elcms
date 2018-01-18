@@ -28,16 +28,18 @@
 		"dibi/dibi": "^3.1",
         "smahelos/ace-builds": "dev-master",
 		"vojtech-dobes/nette-ajax-history": "dev-master",
-		"almasaeed2010/adminlte": "^2.4"
+		"almasaeed2010/adminlte": "^2.4",
+		"eonasdan/bootstrap-datetimepicker": "dev-master",
+        "sunhater/kcfinder": "dev-master"
 	},
 	"require-dev": {
 		"nette/tester": "^2.0"
 	},
     "repositories": [
-      {
-        "type": "vcs",
-        "url": "https://github.com/smahelos/ace-builds"
-      }
+      	{
+        	"type": "vcs",
+        	"url": "https://github.com/smahelos/ace-builds"
+      	}
     ],
 	"minimum-stability": "stable",
 	"config": {

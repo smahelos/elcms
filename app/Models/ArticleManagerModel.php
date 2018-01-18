@@ -39,6 +39,17 @@ class ArticleManagerModel
      */
     public function insertArticle($values)
     {
+        unset($values['articleId']);
+        $date = date('Y-m-d H:i:s');
+        if ((int)$values->published === 1) {
+            $values->published_at = $date;
+        }
+        if ((int)$values->deleted === 1) {
+            $values->deleted_at = $date;
+        }
+        if ((int)$values->parent === 0) {
+            $values->parent = null;
+        }
         $this->database->table($this->table)->insert($values);
     }
 
@@ -48,23 +59,22 @@ class ArticleManagerModel
      */
     public function updateArticle($id, $values)
     {
-        $publishedAt = 0;
-        $deletedAt = 0;
-        $parent = $values->parent;
         $date = date('Y-m-d H:i:s');
+        $values->published_at = 0;
+        $values->deleted_at = 0;
         if ((int)$values->published === 1) {
-            $publishedAt = $date;
+            $values->published_at = $date;
         }
         if ((int)$values->deleted === 1) {
-            $deletedAt = $date;
+            $values->deleted_at = $date;
         }
         if ((int)$values->parent === 0) {
-            $parent = null;
+            $values->parent = null;
         }
         $this->database->table($this->table)
             ->where('id', $id)
             ->update([
-                'parent' => $parent,
+                'parent' => $values->parent,
                 'template' => $values->template,
                 'title' => $values->title,
                 'menuindex' => $values->menuindex,
@@ -73,9 +83,10 @@ class ArticleManagerModel
                 'content' => $values->content,
                 'published' => $values->published,
                 'deleted' => $values->deleted,
-                'published_at' => $publishedAt,
+                'published_at' => $values->published_at,
+                'created_at' => $values->created_at,
                 'updated_at' => $date,
-                'deleted_at' => $deletedAt,
+                'deleted_at' => $values->deleted_at,
             ]);
     }
 
@@ -416,5 +427,30 @@ class ArticleManagerModel
         }
 
         return $newMenuIndex;
+    }
+
+    /**
+     * get highest item menuindex in node
+     *
+     * @param null $parent
+     *
+     * @return int
+     */
+    public function getHighestMenuIndexInNode($parent = null) :int
+    {
+        $fromParent = null;
+        if (null !== $parent && $parent !== '') {
+            $fromParent = $parent;
+        }
+
+        $maxMenuindex = $this->database->table($this->table)
+            ->where('parent', $fromParent)
+            ->max('menuindex');
+
+        if (null === $maxMenuindex || $maxMenuindex === '') {
+            $maxMenuindex = 1;
+        }
+
+        return $maxMenuindex;
     }
 }

@@ -1,8 +1,6 @@
-app/config/config.local.neon
 .build/node_modules/
 .build/npm-debug.log
 .gitignore
-.htaccess
 log/
 temp/
 vendor/
