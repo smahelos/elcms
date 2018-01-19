@@ -1,4 +1,6 @@
 //** custom scripts
+var $content = $('#snippet--content');
+
 $( document ).ready(function()
 {
     //datagrid item active after click
@@ -6,8 +8,6 @@ $( document ).ready(function()
 
     //show passwords inputs in user form after change password input is checked
     showPasswordInputs();
-
-    loadCkEditor();
 
     //iCheck for checkbox and radio inputs
     //Flat red color scheme for iCheck
@@ -23,8 +23,8 @@ $( document ).ready(function()
 
 });
 
-//* reinitialize after ajax
-$.nette.ext('snippets').after(function () {
+//* reinitialize after all snippets
+$.nette.ext('snippets').complete(function () {
     var contentWrapper = '.content-wrapper';
     // 101 is height of main-header and footer blocks
     var contentWrapperHeight = $(window).height() - 101;
@@ -35,6 +35,7 @@ $.nette.ext('snippets').after(function () {
     //show passwords inputs in user form after change password input is checked
     showPasswordInputs();
 
+    // init ckEdior
     loadCkEditor();
 
     //iCheck for checkbox and radio inputs
@@ -43,7 +44,6 @@ $.nette.ext('snippets').after(function () {
         checkboxClass: 'icheckbox_flat-blue',
         radioClass   : 'iradio_flat-green'
     });
-
 
     //Date picker
     $('.datepicker').datetimepicker({
@@ -57,6 +57,14 @@ $.nette.ext('snippets').after(function () {
     });
 
 });
+
+// // before ajax
+// $.nette.ext('snippets').before(function () {
+// });
+
+// after each snippet
+// $.nette.ext('snippets').after(function () {
+// });
 
 //* get datagrid item active after click
 function clickDatagridItemClass()
@@ -79,10 +87,8 @@ function showPasswordInputs()
     });
 }
 
-//CKEDITOR init
+//CKEDITOR init and destroy
 function loadCkEditor() {
-    if (CKEDITOR.instances.ckEditor) CKEDITOR.instances.ckEditor.destroy();
-
     CKEDITOR.replace('ckEditor', {
         baseHref: CKEDITOR.basePath + '/../../../../../',
         filebrowserBrowseUrl: CKEDITOR.basePath + '../kcfinder/browse.php?type=files',
