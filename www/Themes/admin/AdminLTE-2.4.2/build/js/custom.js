@@ -9,6 +9,9 @@ $( document ).ready(function()
     //show passwords inputs in user form after change password input is checked
     showPasswordInputs();
 
+    // init ckEdior
+    loadCkEditor();
+
     //iCheck for checkbox and radio inputs
     //Flat red color scheme for iCheck
     $('.icheck input[type="checkbox"], .icheck input[type="radio"]').iCheck({
@@ -17,14 +20,22 @@ $( document ).ready(function()
     });
 
     //Date picker
-    $('.datepicker').datetimepicker({
-        locale: 'cs'
+    $('.datepicker').datepicker({
+        format: 'yyyy-mm-dd',
+        language: 'cs'
+    });
+
+    //Time picker
+    $('.timepicker').timepicker({
+        showMeridian: false,
+        defaultTime: false
     });
 
 });
 
 //* reinitialize after all snippets
 $.nette.ext('snippets').complete(function () {
+    //console.log($.nette.ext('snippets').name);
     var contentWrapper = '.content-wrapper';
     // 101 is height of main-header and footer blocks
     var contentWrapperHeight = $(window).height() - 101;
@@ -46,9 +57,15 @@ $.nette.ext('snippets').complete(function () {
     });
 
     //Date picker
-    $('.datepicker').datetimepicker({
-        locale: 'cs',
-        format: 'YYYY-MM-DD hh:mm'
+    $('.datepicker').datepicker({
+        format: 'yyyy-mm-dd',
+        language: 'cs'
+    });
+
+    //Time picker
+    $('.timepicker').timepicker({
+        showMeridian: false,
+        defaultTime: false
     });
 
     //set new content height
@@ -59,12 +76,17 @@ $.nette.ext('snippets').complete(function () {
 });
 
 // // before ajax
-// $.nette.ext('snippets').before(function () {
-// });
+$.nette.ext('snippets').before(function () {
+    if (CKEDITOR.instances['ckEditor']) {
+        CKEDITOR.instances['ckEditor'].destroy(true);
+    }
+});
 
 // after each snippet
 // $.nette.ext('snippets').after(function () {
 // });
+
+
 
 //* get datagrid item active after click
 function clickDatagridItemClass()
@@ -89,13 +111,15 @@ function showPasswordInputs()
 
 //CKEDITOR init and destroy
 function loadCkEditor() {
-    CKEDITOR.replace('ckEditor', {
-        baseHref: CKEDITOR.basePath + '/../../../../../',
-        filebrowserBrowseUrl: CKEDITOR.basePath + '../kcfinder/browse.php?type=files',
-        filebrowserImageBrowseUrl: CKEDITOR.basePath + '../kcfinder/browse.php?type=images',
-        filebrowserFlashBrowseUrl: CKEDITOR.basePath + './kcfinder/browse.php?type=flash',
-        filebrowserUploadUrl: CKEDITOR.basePath + '../kcfinder/upload.php?type=files',
-        filebrowserImageUploadUrl: CKEDITOR.basePath + '../kcfinder/upload.php?type=images',
-        filebrowserFlashUploadUrl: CKEDITOR.basePath + '../kcfinder/upload.php?type=flash'
-    });
+    if ($('#ckEditor').length > 0) { //test existence elementu
+        CKEDITOR.replace('ckEditor', {
+            baseHref: CKEDITOR.basePath + '/../../../../../',
+            filebrowserBrowseUrl: CKEDITOR.basePath + '../kcfinder/browse.php?type=files',
+            filebrowserImageBrowseUrl: CKEDITOR.basePath + '../kcfinder/browse.php?type=images',
+            filebrowserFlashBrowseUrl: CKEDITOR.basePath + './kcfinder/browse.php?type=flash',
+            filebrowserUploadUrl: CKEDITOR.basePath + '../kcfinder/upload.php?type=files',
+            filebrowserImageUploadUrl: CKEDITOR.basePath + '../kcfinder/upload.php?type=images',
+            filebrowserFlashUploadUrl: CKEDITOR.basePath + '../kcfinder/upload.php?type=flash'
+        });
+    }
 }

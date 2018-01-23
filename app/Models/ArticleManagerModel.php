@@ -39,17 +39,17 @@ class ArticleManagerModel
      */
     public function insertArticle($values)
     {
-        unset($values['articleId']);
-        $date = date('Y-m-d H:i:s');
-        if ((int)$values->published === 1) {
-            $values->published_at = $date;
-        }
-        if ((int)$values->deleted === 1) {
-            $values->deleted_at = $date;
-        }
+        $values = $this->setCreated($values);
+        $values = $this->setPublished($values);
+        $values = $this->setDeleted($values);
+        $values->created_at = date('Y-m-d H:i:s');
+        $values->updated_at = date('Y-m-d H:i:s');
+
         if ((int)$values->parent === 0) {
             $values->parent = null;
         }
+        unset($values['articleId'], $values['created_at_time'], $values['published_at_time'], $values['updated_at_time']);
+
         $this->database->table($this->table)->insert($values);
     }
 
@@ -59,18 +59,13 @@ class ArticleManagerModel
      */
     public function updateArticle($id, $values)
     {
-        $date = date('Y-m-d H:i:s');
-        $values->published_at = 0;
-        $values->deleted_at = 0;
-        if ((int)$values->published === 1) {
-            $values->published_at = $date;
-        }
-        if ((int)$values->deleted === 1) {
-            $values->deleted_at = $date;
-        }
+        $values = $this->setCreated($values);
+        $values = $this->setPublished($values);
+        $values = $this->setDeleted($values);
         if ((int)$values->parent === 0) {
             $values->parent = null;
         }
+
         $this->database->table($this->table)
             ->where('id', $id)
             ->update([
@@ -85,7 +80,7 @@ class ArticleManagerModel
                 'deleted' => $values->deleted,
                 'published_at' => $values->published_at,
                 'created_at' => $values->created_at,
-                'updated_at' => $date,
+                'updated_at' => date('Y-m-d H:i:s'),
                 'deleted_at' => $values->deleted_at,
             ]);
     }
@@ -452,5 +447,88 @@ class ArticleManagerModel
         }
 
         return $maxMenuindex;
+    }
+
+
+    /**
+     * @param $values
+     *
+     * @return mixed
+     */
+    public function setCreated($values)
+    {
+        if ((int)$values->created_at !== '') {
+            $values->created_at = $values->created_at . ' ' . $values->created_at_time;
+        } else {
+            $values->created_at = '';
+        }
+
+        return $values;
+    }
+
+    /**
+     * @param $values
+     *
+     * @return mixed
+     */
+    public function setPublished($values)
+    {
+        $date = date('Y-m-d H:i:s');
+        if ((int)$values->published === 1) {
+            $values->published_at = $date;
+            if ($values->published_at !== '') {
+                $values->published_at = $values->published_at . ' ' . $values->published_at_time;
+            }
+        } else {
+            $values->published_at = '';
+        }
+
+        return $values;
+    }
+
+    /**
+     * @param $values
+     *
+     * @return mixed
+     */
+    public function setDeleted($values)
+    {
+        $date = date('Y-m-d H:i:s');
+        if ((int)$values->deleted === 1) {
+            $values->deleted_at = $date;
+            $values->published_at = '';
+        } else {
+            $values->deleted_at = '';
+        }
+
+        return $values;
+    }
+
+    /**
+     * @param $dateTimeValue
+     * @param $type (accept values 'created_at', 'published_at', 'updated_at')
+     * @param int $published (optional)
+     * @param int $deleted (optional)
+     *
+     * @return array
+     */
+    public function splitDateTime($dateTimeValue, $type, $published = 0, $deleted = 0): array
+    {
+        $dateTimeValues = [];
+        list($date, $time) = explode(' ', $dateTimeValue);
+        $strtotime = strtotime($dateTimeValue);
+        if ($strtotime > 0 && $strtotime !== false) {
+            $dateTimeValues[$type . '_date'] = $date;
+            $dateTimeValues[$type . '_time'] = $time;
+            if ($type === 'published_at' && ($published === 0 || $deleted === 1)) {
+                $dateTimeValues[$type . '_date'] = '';
+                $dateTimeValues[$type . '_time'] = '';
+            }
+        } else {
+            $dateTimeValues[$type . '_date'] = '';
+            $dateTimeValues[$type . '_time'] = '';
+        }
+
+        return $dateTimeValues;
     }
 }

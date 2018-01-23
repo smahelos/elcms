@@ -81,9 +81,7 @@ class ArticleFormControl extends Control
 
         $form->addText('parent', 'Rodič');
 
-        $form->addSelect('template', 'Šablona', $this->getTemplates())
-            //->setPrompt($defaultArticleValues['template'])
-            ->setRequired();
+        $form->addSelect('template', 'Šablona', $this->getTemplates());
 
         $form->addText('menuindex', 'Menuindex (pořadí ve stromu dokumentů)');
 
@@ -92,8 +90,7 @@ class ArticleFormControl extends Control
 
         $form->addTextArea('perex', 'Perex');
 
-        $form->addTextArea('content', 'Obsah')
-            ->setRequired();
+        $form->addTextArea('content', 'Obsah');
 
         $form->addCheckbox('published', 'Zveřejněn');
 
@@ -102,13 +99,22 @@ class ArticleFormControl extends Control
         $form->addCheckbox('show_in_menu', 'Zobrazit v menu');
 
         $form->addText('created_at', 'Datum a čas vytvoření')
-            ->setAttribute('placeholder', 'yyyy-mm-dd hh:mm');
+            ->setAttribute('placeholder', 'yyyy-mm-dd');
+
+        $form->addText('created_at_time', 'Čas vytvoření')
+            ->setAttribute('placeholder', 'hh:mm');
 
         $form->addText('published_at', 'Datum a čas zveřejnění')
-            ->setAttribute('placeholder', 'yyyy-mm-dd hh:mm');
+            ->setAttribute('placeholder', 'yyyy-mm-dd');
+
+        $form->addText('published_at_time', 'Čas zveřejnění')
+            ->setAttribute('placeholder', 'hh:mm');
 
         $form->addText('updated_at', 'Datum a čas poslední úpravy')
-            ->setAttribute('placeholder', 'yyyy-mm-dd hh:mm');
+            ->setAttribute('placeholder', 'yyyy-mm-dd');
+
+        $form->addText('updated_at_time', 'Čas poslední úpravy')
+            ->setAttribute('placeholder', 'hh:mm');
 
         $form->addHidden('articleId');
 
@@ -121,6 +127,11 @@ class ArticleFormControl extends Control
                 $parent = 0;
             }
 
+            /* handle date and time */
+            $splitedCreatedDateTime = $this->articleManager->splitDateTime($article['created_at'], 'created_at');
+            $splitedPublishedDateTime = $this->articleManager->splitDateTime($article['published_at'], 'published_at', (int)$article['published'], (int)$article['deleted']);
+            $splitedUpdatedDateTime = $this->articleManager->splitDateTime($article['updated_at'], 'updated_at');
+
             $form->setDefaults([
                 'parent' => $parent,
                 'template' => $article['template'],
@@ -131,9 +142,12 @@ class ArticleFormControl extends Control
                 'content' => $article['content'],
                 'published' => $article['published'],
                 'deleted' => $article['deleted'],
-                'created_at' => $article['created_at'],
-                'published_at' => $article['published_at'],
-                'updated_at' => $article['updated_at']
+                'created_at' => $splitedCreatedDateTime['created_at_date'],
+                'created_at_time' => $splitedCreatedDateTime['created_at_time'],
+                'published_at' => $splitedPublishedDateTime['published_at_date'],
+                'published_at_time' => $splitedPublishedDateTime['published_at_time'],
+                'updated_at' => $splitedUpdatedDateTime['updated_at_date'],
+                'updated_at_time' => $splitedUpdatedDateTime['updated_at_time'],
             ]);
         } else {
             $form->setDefaults([

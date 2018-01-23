@@ -9,7 +9,7 @@
 
 			<h2><a n:href="Articles:detail $article->id">{$article->title}</a></h2>
 
-			<div>{$article->content}</div>
+			<div>{$article->content|noescape}</div>
 		</div>
     {/foreach}
 {/block}

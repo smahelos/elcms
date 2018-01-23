@@ -29,9 +29,6 @@
                 {input perex, class => 'form-control'}
                 <span class="glyphicon glyphicon-lock form-control-feedback"></span>
             </div>
-            <script>
-                var CKEDITOR_BASEPATH = {$basePath} + '/assets/admin/libs/ckeditor/';
-            </script>
             <div class="form-group has-feedback">
                 {label content}
                 {input content, class => 'form-control editor', id => 'ckEditor'}
@@ -71,31 +68,67 @@
             <br />
             <div class="form-group">
                 {label created_at}
-                <div class="input-group date">
-                    <div class="input-group-addon">
-                        <i class="fa fa-calendar"></i>
+                <div class="row">
+                    <div class="col-xs-6">
+                        <div class="input-group date">
+                            <div class="input-group-addon">
+                                <i class="fa fa-calendar"></i>
+                            </div>
+                            {input created_at, class => 'form-control pull-right datepicker'}
+                        </div>
                     </div>
-                    {input created_at, class => 'form-control pull-right datepicker'}
+                    <div class="col-xs-6">
+                        <div class="input-group bootstrap-timepicker">
+                            <div class="input-group-addon">
+                                <i class="glyphicon glyphicon-time"></i>
+                            </div>
+                            {input created_at_time, class => 'form-control pull-right timepicker input-small'}
+                        </div>
+                    </div>
                 </div>
             </div>
             <br />
             <div class="form-group">
                 {label published_at}
-                <div class="input-group date">
-                    <div class="input-group-addon">
-                        <i class="fa fa-calendar"></i>
+                <div class="row">
+                    <div class="col-xs-6">
+                        <div class="input-group date">
+                            <div class="input-group-addon">
+                                <i class="fa fa-calendar"></i>
+                            </div>
+                            {input published_at, class => 'form-control pull-right datepicker'}
+                        </div>
                     </div>
-                    {input published_at, class => 'form-control pull-right datepicker'}
+                    <div class="col-xs-6">
+                        <div class="input-group bootstrap-timepicker">
+                            <div class="input-group-addon">
+                                <i class="glyphicon glyphicon-time"></i>
+                            </div>
+                            {input published_at_time, class => 'form-control pull-right timepicker input-small'}
+                        </div>
+                    </div>
                 </div>
             </div>
             <br />
             <div class="form-group">
                 {label updated_at}
-                <div class="input-group date">
-                    <div class="input-group-addon">
-                        <i class="fa fa-calendar"></i>
+                <div class="row">
+                    <div class="col-xs-6">
+                        <div class="input-group date">
+                            <div class="input-group-addon">
+                                <i class="fa fa-calendar"></i>
+                            </div>
+                            {input updated_at, class => 'form-control pull-right datepicker'}
+                        </div>
                     </div>
-                    {input updated_at, class => 'form-control pull-right datepicker'}
+                    <div class="col-xs-6">
+                        <div class="input-group bootstrap-timepicker">
+                            <div class="input-group-addon">
+                                <i class="glyphicon glyphicon-time"></i>
+                            </div>
+                            {input updated_at_time, class => 'form-control pull-right timepicker input-small'}
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
